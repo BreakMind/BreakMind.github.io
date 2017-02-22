@@ -1,0 +1,43 @@
+# Header
+menu:
+  主页: /
+  存档: /archives
+  作品集: /works
+  关于我: /about
+  《Arduino魔法书》专题页面: /arduino
+  本博客源代码: https://coding.net/u/kqkq/p/blog/git
+rss: /atom.xml
+
+# SNS Links
+github_url: https://github.com/kqkq
+weibo_url: http://weibo.com/kqwd
+renren_url: http://www.renren.com/240043689
+twitter_url: https://twitter.com/kuangqi
+
+# Content
+excerpt_link: 继续阅读
+fancybox: true
+
+# Sidebar
+sidebar: right
+widgets:
+- category
+- recent_posts
+- tag
+- tagcloud
+- weibo
+- link
+# - archive
+
+# Miscellaneous
+host_name: kuangqi.me
+google_analytics: UA-49728497-1
+baidu_analytics: true
+baidu_share: true
+switch_banner: true
+banner_count: 6
+favicon: /favicon.png
+twitter: kuangqi
+google_plus:
+fb_admins:
+fb_app_id:
