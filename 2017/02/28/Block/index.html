@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Block | Talk is cheap, show me the code.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在Objective-C中如何定义一个Block？
+作为一个局部变量:returnType (^blockName)(parameterTypes) = ^returnType(parameters) {…};
+作为一个属性:@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);
+作为一个方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Block">
+<meta property="og:url" content="http://BreakMind.github.io/2017/02/28/Block/index.html">
+<meta property="og:site_name" content="Talk is cheap, show me the code.">
+<meta property="og:description" content="在Objective-C中如何定义一个Block？
+作为一个局部变量:returnType (^blockName)(parameterTypes) = ^returnType(parameters) {…};
+作为一个属性:@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);
+作为一个方">
+<meta property="og:updated_time" content="2017-02-28T07:21:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Block">
+<meta name="twitter:description" content="在Objective-C中如何定义一个Block？
+作为一个局部变量:returnType (^blockName)(parameterTypes) = ^returnType(parameters) {…};
+作为一个属性:@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);
+作为一个方">
+  
+    <link rel="alternate" href="/atom.xml" title="Talk is cheap, show me the code." type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Talk is cheap, show me the code.</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/">个人简介</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://BreakMind.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Block" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/28/Block/" class="article-date">
+  <time datetime="2017-02-28T05:26:44.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Block
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Objective-C中如何定义一个Block？</p>
+<p>作为一个局部变量:<br>returnType (^blockName)(parameterTypes) = ^returnType(parameters) {…};</p>
+<p>作为一个属性:<br>@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);</p>
+<p>作为一个方法参数:</p>
+<ul>
+<li>(void)someMethodThatTakesABlock:(returnType (^nullability)(parameterTypes))blockName;<br>As an argument to a method call:</li>
+</ul>
+<p>[someObject someMethodThatTakesABlock:^returnType (parameters) {…}];</p>
+<p>As a typedef:<br>typedef returnType (^TypeName)(parameterTypes);<br>TypeName blockName = ^returnType(parameters) {…};</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;pthread.h&gt;</div><div class="line"></div><div class="line">typedef void(^MY_BLOCK)(void);  // typedef Block</div><div class="line"></div><div class="line">@interface GHBlockTest : NSObject</div><div class="line">-(void)SetBlock:(MY_BLOCK)my_block; //Block作为参数</div><div class="line">-(MY_BLOCK)GetBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@interface GHBlockTest()</div><div class="line">@property(nonatomic, copy, nullable) MY_BLOCK myBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GHBlockTest</div><div class="line">@synthesize myBlock=_myBlock;</div><div class="line"></div><div class="line">-(void)SetBlock:(MY_BLOCK)my_block &#123;//Block作为值传入</div><div class="line">    _myBlock =my_block;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)showBlock&#123;</div><div class="line">    self.myBlock();</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(MY_BLOCK)GetBlock&#123;</div><div class="line">    return self.myBlock; //作为值返回</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">int main(int argc, char * argv[])</div><div class="line">&#123;</div><div class="line">    GHBlockTest * myBlockTest = [[GHBlockTest alloc] init];</div><div class="line">    __block NSInteger tmpThisYear; //仅用于演示Block内写入函数的局部变量，必须将此变量前增加 __block</div><div class="line">    [myBlockTest SetBlock:^&#123;</div><div class="line">        tmpThisYear = 2017;</div><div class="line">        NSLog(@&quot;Hello, %ld !&quot;, tmpThisYear);</div><div class="line">    &#125;];</div><div class="line">    [myBlockTest showBlock];</div><div class="line">    MY_BLOCK myNewBlock = [myBlockTest GetBlock]; //获取Block值</div><div class="line">    myNewBlock();</div><div class="line">    </div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行结果如下"><a href="#运行结果如下" class="headerlink" title="运行结果如下"></a>运行结果如下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2017-02-28 14:15:22.839019 NSThreadTest[28474:316728] Hello, 2017 !</div><div class="line">2017-02-28 14:15:22.839320 NSThreadTest[28474:316728] Hello, 2017 !</div><div class="line">Program ended with exit code: 0</div></pre></td></tr></table></figure>
+<p>将Block嵌入到类中，可以直接get或者set类属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;pthread.h&gt;</div><div class="line"></div><div class="line">typedef void(^MY_BLOCK)(void);      // typedef Block</div><div class="line"></div><div class="line">@interface GHBlockTest : NSObject</div><div class="line">-(void)SetBlock;                    //Block作为参数</div><div class="line">-(MY_BLOCK)GetBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@interface GHBlockTest()</div><div class="line">@property(nonatomic, copy, nullable) MY_BLOCK myBlock;</div><div class="line">@property(nonatomic, strong) NSString * helloString;</div><div class="line">@property(nonatomic, assign)NSInteger thisYear;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GHBlockTest</div><div class="line">@synthesize myBlock=_myBlock;</div><div class="line">@synthesize helloString = _helloString;</div><div class="line">@synthesize thisYear = _thisYear;</div><div class="line"></div><div class="line">-(instancetype)init&#123;</div><div class="line">    self = [super init];</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)SetBlock &#123;//Block作为值传入</div><div class="line">    _myBlock =^&#123;</div><div class="line">        _thisYear = 2017;			// 注意，在内嵌的Block里面，直接设置所在类的属性值。</div><div class="line">        _helloString = @&quot;Hello&quot;;	// 同上</div><div class="line">        NSLog(@&quot;%@, %ld !&quot;, _helloString,_thisYear);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)showBlock&#123;</div><div class="line">    self.myBlock();</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(MY_BLOCK)GetBlock&#123;</div><div class="line">    return self.myBlock; //作为值返回</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">int main(int argc, char * argv[])</div><div class="line">&#123;</div><div class="line">    GHBlockTest * myBlockTest = [[GHBlockTest alloc] init];</div><div class="line">    [myBlockTest SetBlock];</div><div class="line">    [myBlockTest showBlock];</div><div class="line">    </div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/28/Block/" data-id="cizqzznu90003gw6q2k8lnpkt" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/28/Homebrew/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">新的</strong>
+      <div class="article-nav-title">
+        
+          Homebrew
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/28/GCD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">旧的</strong>
+      <div class="article-nav-title">GCD</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Block" data-title="Block" data-url="http://BreakMind.github.io/2017/02/28/Block/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'breakmind'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/01/Cocoapod安装与简单使用/">Cocoapod安装与简单使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/28/MAC下使用CLOC进行代码量统计/">MAC下使用CLOC进行代码量统计</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/28/Homebrew/">Homebrew</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/28/Block/">Block</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/28/GCD/">GCD</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">相关博客</h3>
+    <div class="widget">
+    <ul>
+      <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
+      <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
+      <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>
+      <li><a href="http://www.shellsec.com/news/8114.html" target="_blank">BAT 面试指南</a></li>
+      <li><a href="http://blog.csdn.net/yiyaaixuexi/" target="_blank">念茜</a></li>
+      <li><a href="http://blog.txx.im/" target="_blank">TXX</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 BreakMind<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/" class="mobile-nav-link">个人简介</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

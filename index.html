@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>披星戴月，披荆斩棘，头也不回向前走</title>
+  <title>Talk is cheap, show me the code.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="披星戴月，披荆斩棘，头也不回向前走">
+<meta property="og:title" content="Talk is cheap, show me the code.">
 <meta property="og:url" content="http://BreakMind.github.io/index.html">
-<meta property="og:site_name" content="披星戴月，披荆斩棘，头也不回向前走">
+<meta property="og:site_name" content="Talk is cheap, show me the code.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="披星戴月，披荆斩棘，头也不回向前走">
+<meta name="twitter:title" content="Talk is cheap, show me the code.">
   
-    <link rel="alternate" href="/atom.xml" title="披星戴月，披荆斩棘，头也不回向前走" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Talk is cheap, show me the code." type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -33,7 +33,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">披星戴月，披荆斩棘，头也不回向前走</a>
+        <a href="/" id="logo">Talk is cheap, show me the code.</a>
       </h1>
       
     </div>
@@ -62,6 +62,284 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Cocoapod安装与简单使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/01/Cocoapod安装与简单使用/" class="article-date">
+  <time datetime="2017-03-01T13:27:15.000Z" itemprop="datePublished">2017-03-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MAC/">MAC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/01/Cocoapod安装与简单使用/">Cocoapod安装与简单使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="首次使用"><a href="#首次使用" class="headerlink" title="首次使用"></a>首次使用</h1><h2 id="增加一个Repo"><a href="#增加一个Repo" class="headerlink" title="增加一个Repo"></a>增加一个Repo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod repo add AFNetworking &quot;https://github.com/AFNetworking/AFNetworking.git&quot;</div></pre></td></tr></table></figure>
+<h2 id="显示本地的Repo"><a href="#显示本地的Repo" class="headerlink" title="显示本地的Repo"></a>显示本地的Repo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod repo list</div></pre></td></tr></table></figure>
+<h2 id="查找需要添加的组件"><a href="#查找需要添加的组件" class="headerlink" title="查找需要添加的组件"></a>查找需要添加的组件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod search AFNetworking</div></pre></td></tr></table></figure>
+<h2 id="查找后会显示一堆Repo，但是这里我们只需要看到第一个"><a href="#查找后会显示一堆Repo，但是这里我们只需要看到第一个" class="headerlink" title="查找后会显示一堆Repo，但是这里我们只需要看到第一个"></a>查找后会显示一堆Repo，但是这里我们只需要看到第一个</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">-&gt; AFNetworking (3.1.0)</div><div class="line">   A delightful iOS and OS X networking framework.</div><div class="line">   pod &apos;AFNetworking&apos;, &apos;~&gt; 3.1.0&apos;</div><div class="line">   - Homepage: https://github.com/AFNetworking/AFNetworking</div><div class="line">   - Source:   https://github.com/AFNetworking/AFNetworking.git</div><div class="line">   - Versions: 3.1.0, 3.0.4, 3.0.3, 3.0.2, 3.0.1, 3.0.0, 3.0.0-beta.3, 3.0.0-beta.2, 3.0.0-beta.1, 2.6.3, 2.6.2, 2.6.1, 2.6.0, 2.5.4, 2.5.3,</div><div class="line">   2.5.2, 2.5.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1, 2.3.0, 2.2.4, 2.2.3, 2.2.2, 2.2.1, 2.2.0, 2.1.0, 2.0.3, 2.0.2, 2.0.1, 2.0.0, 2.0.0-RC3, 2.0.0-RC2,</div><div class="line">   2.0.0-RC1, 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.1, 1.2.0, 1.1.0, 1.0.1, 1.0, 1.0RC3, 1.0RC2, 1.0RC1, 0.10.1, 0.10.0, 0.9.2, 0.9.1, 0.9.0,</div><div class="line">   0.7.0, 0.5.1 [master repo]</div><div class="line">   - Subspecs:</div><div class="line">     - AFNetworking/Serialization (3.1.0)</div><div class="line">     - AFNetworking/Security (3.1.0)</div><div class="line">     - AFNetworking/Reachability (3.1.0)</div><div class="line">     - AFNetworking/NSURLSession (3.1.0)</div><div class="line">     - AFNetworking/UIKit (3.1.0)</div></pre></td></tr></table></figure>
+<h3 id="将组件的名称以及版本号添加到当前项目的根目录内的Podfile文件内"><a href="#将组件的名称以及版本号添加到当前项目的根目录内的Podfile文件内" class="headerlink" title="将组件的名称以及版本号添加到当前项目的根目录内的Podfile文件内"></a>将组件的名称以及版本号添加到当前项目的根目录内的Podfile文件内</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># Uncomment the next line to define a global platform for your project</div><div class="line"> platform :ios, &apos;9.0&apos;(原来注释掉的，现在去掉)</div><div class="line"></div><div class="line">target &apos;NSThreadTest&apos; do</div><div class="line">  # Uncomment the next line if you&apos;re using Swift or would like to use dynamic frameworks</div><div class="line">  # use_frameworks!</div><div class="line"></div><div class="line">  # Pods for NSThreadTest</div><div class="line">  pod &apos;AFNetworking&apos;, &apos;~&gt; 3.1.0&apos; (原来没有这一行，现在我们需要增加上名称以及对应的版本号)</div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令"><a href="#在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令" class="headerlink" title="在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令"></a>在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod install</div></pre></td></tr></table></figure>
+<h2 id="在我的终端上面显示"><a href="#在我的终端上面显示" class="headerlink" title="在我的终端上面显示"></a>在我的终端上面显示</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Analyzing dependencies</div><div class="line">Downloading dependencies</div><div class="line">Installing AFNetworking (3.1.0)</div><div class="line">Generating Pods project</div><div class="line">Integrating client project</div><div class="line">Sending stats</div></pre></td></tr></table></figure>
+<h2 id="打开工程"><a href="#打开工程" class="headerlink" title="打开工程"></a>打开工程</h2><p>注意，这个时候不要再打开.xcodeproj 工程，而是.xcworkspace，这个时候就可以看到所有的内容都在里面了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/01/Cocoapod安装与简单使用/" data-id="cizqzznrn0000gw6qwjn779zj" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MAC下使用CLOC进行代码量统计" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/28/MAC下使用CLOC进行代码量统计/" class="article-date">
+  <time datetime="2017-02-28T07:12:23.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MAC/">MAC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/MAC下使用CLOC进行代码量统计/">MAC下使用CLOC进行代码量统计</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用参照博客：<br><a href="http://echohn.github.io/2016/09/24/use-cloc-to-count-your-code/" target="_blank" rel="external">http://echohn.github.io/2016/09/24/use-cloc-to-count-your-code/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/28/MAC下使用CLOC进行代码量统计/" data-id="cizqzznv8000mgw6ql10k5wui" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Homebrew" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/28/Homebrew/" class="article-date">
+  <time datetime="2017-02-28T07:00:09.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MAC/">MAC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/Homebrew/">Homebrew</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Homebrew官网：<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">http://brew.sh/index_zh-cn.html</a></p>
+<p>Linux系统的通病是软件包依赖。当年安装一个软件包时，发现该软件包依赖于另外一个软件包。如果手动安装，你就得一个一个安装相关联的软件包。好在主流的发行版本的Linux系统都自带了解决方案，Red hat有yum，Ubuntu有apt-get。<br>MAC有类似的东西，就是Homebrew，是MAC OSX上的软件包管理工具，能在Mac中方便的安装和卸载软件。</p>
+<p>Homebrew安装命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure></p>
+<p>Homebrew常用命令行：<br>搜索软件：brew search 软件名，如brew search wget<br>安装软件：brew install 软件名，如brew install wget<br>卸载软件：brew remove 软件名，如brew remove wget</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/28/Homebrew/" data-id="cizqzznuh0007gw6qd0dymqag" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Block" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/28/Block/" class="article-date">
+  <time datetime="2017-02-28T05:26:44.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/Block/">Block</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Objective-C中如何定义一个Block？</p>
+<p>作为一个局部变量:<br>returnType (^blockName)(parameterTypes) = ^returnType(parameters) {…};</p>
+<p>作为一个属性:<br>@property (nonatomic, copy, nullability) returnType (^blockName)(parameterTypes);</p>
+<p>作为一个方法参数:</p>
+<ul>
+<li>(void)someMethodThatTakesABlock:(returnType (^nullability)(parameterTypes))blockName;<br>As an argument to a method call:</li>
+</ul>
+<p>[someObject someMethodThatTakesABlock:^returnType (parameters) {…}];</p>
+<p>As a typedef:<br>typedef returnType (^TypeName)(parameterTypes);<br>TypeName blockName = ^returnType(parameters) {…};</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;pthread.h&gt;</div><div class="line"></div><div class="line">typedef void(^MY_BLOCK)(void);  // typedef Block</div><div class="line"></div><div class="line">@interface GHBlockTest : NSObject</div><div class="line">-(void)SetBlock:(MY_BLOCK)my_block; //Block作为参数</div><div class="line">-(MY_BLOCK)GetBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@interface GHBlockTest()</div><div class="line">@property(nonatomic, copy, nullable) MY_BLOCK myBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GHBlockTest</div><div class="line">@synthesize myBlock=_myBlock;</div><div class="line"></div><div class="line">-(void)SetBlock:(MY_BLOCK)my_block &#123;//Block作为值传入</div><div class="line">    _myBlock =my_block;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)showBlock&#123;</div><div class="line">    self.myBlock();</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(MY_BLOCK)GetBlock&#123;</div><div class="line">    return self.myBlock; //作为值返回</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">int main(int argc, char * argv[])</div><div class="line">&#123;</div><div class="line">    GHBlockTest * myBlockTest = [[GHBlockTest alloc] init];</div><div class="line">    __block NSInteger tmpThisYear; //仅用于演示Block内写入函数的局部变量，必须将此变量前增加 __block</div><div class="line">    [myBlockTest SetBlock:^&#123;</div><div class="line">        tmpThisYear = 2017;</div><div class="line">        NSLog(@&quot;Hello, %ld !&quot;, tmpThisYear);</div><div class="line">    &#125;];</div><div class="line">    [myBlockTest showBlock];</div><div class="line">    MY_BLOCK myNewBlock = [myBlockTest GetBlock]; //获取Block值</div><div class="line">    myNewBlock();</div><div class="line">    </div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行结果如下"><a href="#运行结果如下" class="headerlink" title="运行结果如下"></a>运行结果如下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2017-02-28 14:15:22.839019 NSThreadTest[28474:316728] Hello, 2017 !</div><div class="line">2017-02-28 14:15:22.839320 NSThreadTest[28474:316728] Hello, 2017 !</div><div class="line">Program ended with exit code: 0</div></pre></td></tr></table></figure>
+<p>将Block嵌入到类中，可以直接get或者set类属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;pthread.h&gt;</div><div class="line"></div><div class="line">typedef void(^MY_BLOCK)(void);      // typedef Block</div><div class="line"></div><div class="line">@interface GHBlockTest : NSObject</div><div class="line">-(void)SetBlock;                    //Block作为参数</div><div class="line">-(MY_BLOCK)GetBlock;</div><div class="line">@end</div><div class="line"></div><div class="line">@interface GHBlockTest()</div><div class="line">@property(nonatomic, copy, nullable) MY_BLOCK myBlock;</div><div class="line">@property(nonatomic, strong) NSString * helloString;</div><div class="line">@property(nonatomic, assign)NSInteger thisYear;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GHBlockTest</div><div class="line">@synthesize myBlock=_myBlock;</div><div class="line">@synthesize helloString = _helloString;</div><div class="line">@synthesize thisYear = _thisYear;</div><div class="line"></div><div class="line">-(instancetype)init&#123;</div><div class="line">    self = [super init];</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)SetBlock &#123;//Block作为值传入</div><div class="line">    _myBlock =^&#123;</div><div class="line">        _thisYear = 2017;			// 注意，在内嵌的Block里面，直接设置所在类的属性值。</div><div class="line">        _helloString = @&quot;Hello&quot;;	// 同上</div><div class="line">        NSLog(@&quot;%@, %ld !&quot;, _helloString,_thisYear);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)showBlock&#123;</div><div class="line">    self.myBlock();</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(MY_BLOCK)GetBlock&#123;</div><div class="line">    return self.myBlock; //作为值返回</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">int main(int argc, char * argv[])</div><div class="line">&#123;</div><div class="line">    GHBlockTest * myBlockTest = [[GHBlockTest alloc] init];</div><div class="line">    [myBlockTest SetBlock];</div><div class="line">    [myBlockTest showBlock];</div><div class="line">    </div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/28/Block/" data-id="cizqzznu90003gw6q2k8lnpkt" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GCD" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/28/GCD/" class="article-date">
+  <time datetime="2017-02-28T05:17:02.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/GCD/">GCD</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>异步：<br>当前线程可以开启多个线程执行任务，并且每个任务可以不按顺序执行</p>
+<p>同步：<br>同步，本意就是“步调协调”，即协议当前线程按照一定的顺序依次执行。在多线程里，一些敏感的数据不允许被多个线程同时访问，此时使用同步技术访问（临界区，互斥量，信号量，事件），保证数据在任何一个时刻最多只有一个线程访问，以保证数据不被污染。</p>
+<p>队列：<br>这里特指用于存储线程任务的队列数据结构。</p>
+<p>一个进程可以有多个线程，一个线程可以有多个队列。<br>队列分为串行队列，并行队列。</p>
+<p>全局队列：<br>    全局队列为并发队列。全局队列，供整个程序使用，在MRC的时候不需要释放。</p>
+<p>主队列：<br>    主队列为串行队列。主要用于界面的更新（必须异步调用更新代码）。其他与界面更新无关的不要放在这里，否则容易造成界面阻塞。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/28/GCD/" data-id="cizqzznud0004gw6ql2efcyr8" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-开发记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/27/开发记录/" class="article-date">
+  <time datetime="2017-02-27T05:37:19.000Z" itemprop="datePublished">2017-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/27/开发记录/">开发记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="修改1"><a href="#修改1" class="headerlink" title="修改1"></a>修改1</h3><p>2017-02-27 13:07:13.987 GooglyPuff[70647:1020285] App Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temporary exceptions can be configured via your app’s Info.plist file.</p>
+<p>说明：<br>从IOS9开始，强制使用了https协议，对于想要使用http协议，需要在info文件中添加如下字段：</p>
+<p>在面板上点击右键，显示“Show Raws Keys/Vlaues”，然后增加下面内容<br>NSAppTransportSecurity<br>NSAllowsArbitraryLoads 设置为YES。</p>
+<p>也可以在未选择“Show Raws Keys/Values”时，增加“App Transport Security Settings”，再增加子项“Allow Arbitrary Loads”，选择YES。</p>
+<h3 id="修改2"><a href="#修改2" class="headerlink" title="修改2"></a>修改2</h3><p>2017-02-27 13:07:22.203304 GooglyPuff[70647:1020281] [access] This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+<p>说明：<br>这是禁止直接使用相册，需要在info.plist内增加NSPhotoLibraryUsageDescription，并添加说明。具体参照【修改1】<br>除了上面这两个，下面这些也已经增加进来：<br>Privacy - Microphone Usage Description //麦克风权限<br>Privacy - Contacts Usage Description   //通讯录权限<br>Privacy - Camera Usage Description     //摄像头权限<br>Privacy - NSSiriUsageDescription       //Siri的权限<br>Privacy - Bluetooth Peripheral Usage Description //蓝牙<br>Privacy - Reminders Usage Description  //提醒事项<br>Privacy - Motion Usage Description     //运动与健康<br>Privacy - Media Libaray Usage Description //媒体资源库<br>Privacy - Calendars Usage Description  //日历</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/27/开发记录/" data-id="cizqzznuf0006gw6qmlklnr96" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-阿里巴巴" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -95,7 +373,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/阿里巴巴/" data-id="cizlddwnr0004a56q3tfizrlp" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/25/阿里巴巴/" data-id="cizqzznuw000cgw6qfornje1y" class="article-share-link">分享</a>
       
       
     </footer>
@@ -132,11 +410,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>IOS性能优化：<a href="http://ios.jobbole.com/81719/" target="_blank" rel="external">http://ios.jobbole.com/81719/</a><br>Instruments进行iOS性能测试:<a href="http://blog.csdn.net/maryshine/article/details/52187161" target="_blank" rel="external">http://blog.csdn.net/maryshine/article/details/52187161</a></p>
+<p>LearningIOS<a href="https://github.com/zhouhuanqiang/LearningIOS" target="_blank" rel="external">https://github.com/zhouhuanqiang/LearningIOS</a></p>
+<p>IOS多线程<a href="http://www.cnblogs.com/kenshincui/p/3983982.html" target="_blank" rel="external">http://www.cnblogs.com/kenshincui/p/3983982.html</a></p>
+<p>IOS界面开发<a href="http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html" target="_blank" rel="external">http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/IOS开发相关网站/" data-id="cizlddwng0001a56qqr4lddu5" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/25/IOS开发相关网站/" data-id="cizqzznum0008gw6q4874ydow" class="article-share-link">分享</a>
       
       
     </footer>
@@ -190,7 +471,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/荀子劝学/" data-id="cizlddwp7000da56qz17slfnm" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/25/荀子劝学/" data-id="cizqzznv6000kgw6qlqdyeooa" class="article-share-link">分享</a>
       
       
     </footer>
@@ -231,98 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/增光贤文-上/" data-id="cizlddwnp0003a56qv6f2kpk5" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-留侯论" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/留侯论/" class="article-date">
-  <time datetime="2017-02-25T11:31:25.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/鉴古/">鉴古</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/留侯论/">留侯论</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>古之所谓豪杰之士，必有过人之节。人情有所不能忍者，匹夫见辱，拔剑而起，挺身而斗，此不足为勇也。天下有大勇者，卒然临之而不惊，无故加之而不怒。此其所挟持者甚大，而其志甚远也。</p>
-<p>夫子房受书于圯上之老人也，其事甚怪；然亦安知其非秦之世，有隐君子者出而试之。观其所以微见其意者，皆圣贤相与警戒之义；而世不察，以为鬼物，亦已过矣。且其意不在书。当韩之亡，秦之方盛也，以刀锯鼎镬待天下之士。其平居无罪夷灭者，不可胜数。虽有贲、育，无所复施。夫持法太急者，其锋不可犯，而其势未可乘。子房不忍忿忿之心，以匹夫之力，而逞于一击之间；当此之时，子房之不死者，其间不能容发，盖亦已危矣。千金之子，不死于盗贼，何者？其身之可爱，而盗贼之不足以死也。子房以盖世之才，不为伊尹、太公之谋，而特出于荆轲、聂政之计，以侥幸于不死，此圯上老人所为深惜者也。是故倨傲鲜腆而深折之。彼其能有所忍也，然后可以就大事，故曰：“孺子可教也。”</p>
-<p>楚庄王伐郑，郑伯肉袒牵羊以逆；庄王曰：“其君能下人，必能信用其民矣。”遂舍之。勾践之困于会稽，而归臣妾于吴者，三年而不倦。且夫有报人之志，而不能下人者，是匹夫之刚也。夫老人者，以为子房才有余，而忧其度量之不足，故深折其少年刚锐之气，使之忍小忿而就大谋。何则？非有生平之素，卒然相遇于草野之间，而命以仆妾之役，油然而不怪者，此固秦皇之所不能惊，而项籍之所不能怒也。</p>
-<p>观夫高祖之所以胜，而项籍之所以败者，在能忍与不能忍之间而已矣。项籍唯不能忍，是以百战百胜而轻用其锋；高祖忍之，养其全锋而待其弊，此子房教之也。当淮阴破齐而欲自王，高祖发怒，见于词色。由此观之，犹有刚强不忍之气，非子房其谁全之？太史公疑子房以为魁梧奇伟，而其状貌乃如妇人女子，不称其志气。呜呼！此其所以为子房欤！</p>
-<hr>
-<p>点评：忍常人所不能忍，受常人所不能受。如果想做普通人，那么就没有必要对自己有太高要求，但是如果不想做普通人。那么主动去做那些普通人不会去做的事情，去忍受一般人无法忍受的事情。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/留侯论/" data-id="cizlddwoo000ba56qmsp4o6ra" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/21/hello-world/" class="article-date">
-  <time datetime="2017-02-21T12:18:50.000Z" itemprop="datePublished">2017-02-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/吐槽/">吐槽</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/21/hello-world/">这是我的第一篇博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>终于用上了自己博客，虽然博客来得晚了一点。也终于可以跟着技术大拿们的后面，跟着他们好好学习技术。</p>
-<p>以前总觉得不需要博客，但是随着年龄增长，越发觉自己想法需要改变。</p>
-<p>荀子劝学篇里面讲到：故不登高山， 不知天之高也； 不临深溪， 不知地之厚也； 不闻先王之遗言， 不知学问之大也。</p>
-<p>想要知道技术的牛，就必须对技术有更深的了解。</p>
-<p>专心学习吧。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/21/hello-world/" data-id="cizlddwna0000a56qzo8mp8f2" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/25/增光贤文-上/" data-id="cizqzznv2000hgw6qxq3xfkby" class="article-share-link">分享</a>
       
       
     </footer>
@@ -333,6 +523,10 @@
 
   
 
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -341,7 +535,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
     </div>
   </div>
 
@@ -356,7 +550,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
     </div>
   </div>
 
@@ -369,23 +563,23 @@
       <ul>
         
           <li>
-            <a href="/2017/02/25/阿里巴巴/">阿里巴巴招聘</a>
+            <a href="/2017/03/01/Cocoapod安装与简单使用/">Cocoapod安装与简单使用</a>
           </li>
         
           <li>
-            <a href="/2017/02/25/IOS开发相关网站/">IOS开发相关网站</a>
+            <a href="/2017/02/28/MAC下使用CLOC进行代码量统计/">MAC下使用CLOC进行代码量统计</a>
           </li>
         
           <li>
-            <a href="/2017/02/25/荀子劝学/">荀子劝学</a>
+            <a href="/2017/02/28/Homebrew/">Homebrew</a>
           </li>
         
           <li>
-            <a href="/2017/02/25/增光贤文-上/">增光贤文-上</a>
+            <a href="/2017/02/28/Block/">Block</a>
           </li>
         
           <li>
-            <a href="/2017/02/25/留侯论/">留侯论</a>
+            <a href="/2017/02/28/GCD/">GCD</a>
           </li>
         
       </ul>
