@@ -63,6 +63,233 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-开发记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/27/开发记录/" class="article-date">
+  <time datetime="2017-02-27T05:37:19.000Z" itemprop="datePublished">2017-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/27/开发记录/">开发记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="修改1"><a href="#修改1" class="headerlink" title="修改1"></a>修改1</h3><p>2017-02-27 13:07:13.987 GooglyPuff[70647:1020285] App Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temporary exceptions can be configured via your app’s Info.plist file.</p>
+<p>说明：<br>从IOS9开始，强制使用了https协议，对于想要使用http协议，需要在info文件中添加如下字段：</p>
+<p>在面板上点击右键，显示“Show Raws Keys/Vlaues”，然后增加下面内容<br>NSAppTransportSecurity<br>NSAllowsArbitraryLoads 设置为YES。</p>
+<p>也可以在未选择“Show Raws Keys/Values”时，增加“App Transport Security Settings”，再增加子项“Allow Arbitrary Loads”，选择YES。</p>
+<h3 id="修改2"><a href="#修改2" class="headerlink" title="修改2"></a>修改2</h3><p>2017-02-27 13:07:22.203304 GooglyPuff[70647:1020281] [access] This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+<p>说明：<br>这是禁止直接使用相册，需要在info.plist内增加NSPhotoLibraryUsageDescription，并添加说明。具体参照【修改1】<br>除了上面这两个，下面这些也已经增加进来：<br>Privacy - Microphone Usage Description //麦克风权限<br>Privacy - Contacts Usage Description   //通讯录权限<br>Privacy - Camera Usage Description     //摄像头权限<br>Privacy - NSSiriUsageDescription       //Siri的权限<br>Privacy - Bluetooth Peripheral Usage Description //蓝牙<br>Privacy - Reminders Usage Description  //提醒事项<br>Privacy - Motion Usage Description     //运动与健康<br>Privacy - Media Libaray Usage Description //媒体资源库<br>Privacy - Calendars Usage Description  //日历</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/27/开发记录/" data-id="cizsoq1fn000hke6qrkhqmq7u" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-阿里巴巴" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/25/阿里巴巴/" class="article-date">
+  <time datetime="2017-02-25T14:54:08.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/吐槽/">吐槽</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/25/阿里巴巴/">阿里巴巴招聘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>职位描述：<br>1、架构设计：负责阿里音乐在iOS端的技术架构和研发，保证架构的灵活性和先进性。<br>2、体验改进：负责iOS端用户体验的改进，全面改善性能、稳定性、交互、细节等，打造独一无二的阿里星球APP。<br>3、效率提升：在做功能的同时，沉淀平台化技术设施，并推广给其他人使用，提高整体研发效率，降低重复和类似工作。<br>4、技术创新：保持对新技术的敏锐度，通过技术研究和创新，给业务提供新的机会和思路，拓展业务边界。<br>5、项目管理：负责重点项目PM，主导项目进展，协调多方跨BU力量，共同达到目标，拿到结果。</p>
+<p>1、五年以上开发经验，三年以上iOS开发经验，参加过中型商业级APP开发。<br>2、精通iOS应用开发，熟悉常用开源库，精通Objective-C编程语言，熟悉C/C++语言及Native编程，有良好的编程习惯；<br>3、精通UI界面开发，熟悉MVC，MVVM等设计，有组件化思维，了解RN等动态UI原理，在实现UI功能的同时，能考虑未来变化的灵活性。<br>4、熟练掌握VM/Runtime原理，了解操作系统原理及CPU指令，并能够利用原理提出对应用层的优化方案，对底层棘手问题，能够迅速有效的排查。<br>5、了解大型应用多模块合作开发机制，熟悉Git和GitFlow分支管理，了解Bundle化机制，以及Hotpatch机制。<br>6、有性能和稳定性优化经验，熟悉常见的性能稳性定策略，对用户体验有极致追求，有良好的自测习惯。<br>7、有多线程、网络、反编译、安全等编程经验，熟练TCP/HTTP/SPDY/DNS/CDN等网络知识，了解网络优化策略和安全防范机制。<br>8、善于总结，有自己的技术理念，乐于分享，有较高的钻究学习热情，能主动建立自己的技术影响力。<br>9、有良好的表达能力，能抓住问题重点，善于团队合作，有高度责任心，有较强的推动力，有舍我其谁的冲劲</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/25/阿里巴巴/" data-id="cizsoq1gu000vke6qjuyfm1oa" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-IOS开发相关网站" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/25/IOS开发相关网站/" class="article-date">
+  <time datetime="2017-02-25T13:03:24.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS/">IOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/25/IOS开发相关网站/">IOS开发相关网站</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>IOS性能优化：<a href="http://ios.jobbole.com/81719/" target="_blank" rel="external">http://ios.jobbole.com/81719/</a><br>Instruments进行iOS性能测试:<a href="http://blog.csdn.net/maryshine/article/details/52187161" target="_blank" rel="external">http://blog.csdn.net/maryshine/article/details/52187161</a></p>
+<p>LearningIOS<a href="https://github.com/zhouhuanqiang/LearningIOS" target="_blank" rel="external">https://github.com/zhouhuanqiang/LearningIOS</a></p>
+<p>IOS多线程<a href="http://www.cnblogs.com/kenshincui/p/3983982.html" target="_blank" rel="external">http://www.cnblogs.com/kenshincui/p/3983982.html</a></p>
+<p>IOS界面开发<a href="http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html" target="_blank" rel="external">http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/25/IOS开发相关网站/" data-id="cizsoq1er0004ke6qmwctmem0" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-荀子劝学" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/25/荀子劝学/" class="article-date">
+  <time datetime="2017-02-25T12:39:35.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/鉴古/">鉴古</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/25/荀子劝学/">荀子劝学</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>君子曰： 学不可以已。</p>
+<p>青， 取之于蓝， 而青于蓝； 冰， 水为之， 而寒于水。 木直中绳， 輮以为轮， 其曲中规。 虽有槁暴， 不复挺者， 輮使之然也。 故木受绳则直， 金就砺则利， 君子博学而日参省乎己， 则知明而行无过矣。</p>
+<p>故不登高山， 不知天之高也； 不临深溪， 不知地之厚也； 不闻先王之遗言， 不知学问之大也。 干、 越、 夷、 貉之子， 生而同声， 长而异俗， 教使之然也。 诗曰： “嗟尔君子， 无恒安息。 靖共尔位， 好是正直。 神之听之， 介尔景福。” 神莫大于化道， 福莫长于无祸。</p>
+<p>吾尝终日而思矣， 不如须臾之所学也； 吾尝跂而望矣， 不如登高之博见也。 登高而招， 臂非加长也， 而见者远； 顺风而呼， 声非加疾也， 而闻者彰。 假舆马者， 非利足也， 而致千里； 假舟楫者， 非能水也， 而绝江河。 君子性非异也， 善假于物也。</p>
+<p>南方有鸟焉， 名曰蒙鸠， 以羽为巢， 而编之以发， 系之苇苕， 风至苕折， 卵破子死。 巢非不完也， 所系者然也。 西方有木焉， 名曰射干， 茎长四寸， 生于高山之上， 而临百仞之渊， 木茎非能长也， 所立者然也。 蓬生麻中， 不扶而直； 白沙在涅， 与之俱黑。 兰槐之根是为芷， 其渐之滫， 君子不近， 庶人不服。 其质非不美也， 所渐者然也。 故君子居必择乡， 游必就士， 所以防邪辟而近中正也。</p>
+<p>物类之起， 必有所始。 荣辱之来， 必象其德。 肉腐出虫， 鱼枯生蠹。 怠慢忘身， 祸灾乃作。 强自取柱， 柔自取束。 邪秽在身， 怨之所构。 施薪若一， 火就燥也， 平地若一， 水就湿也。 草木畴生， 禽兽群焉， 物各从其类也。 是故质的张， 而弓矢至焉； 林木茂， 而斧斤至焉； 树成荫， 而众鸟息焉。 醯酸， 而蚋聚焉。 故言有招祸也， 行有招辱也， 君子慎其所立乎！</p>
+<p>积土成山， 风雨兴焉； 积水成渊， 蛟龙生焉； 积善成德， 而神明自得， 圣心备焉。 故不积跬步， 无以至千里； 不积小流， 无以成江海。 骐骥一跃， 不能十步； 驽马十驾， 功在不舍。 锲而舍之， 朽木不折； 锲而不舍， 金石可镂。 蚓无爪牙之利， 筋骨之强， 上食埃土， 下饮黄泉， 用心一也。 蟹六跪而二螯， 非蛇鳝之穴无可寄托者， 用心躁也。</p>
+<p>是故无冥冥之志者， 无昭昭之明； 无惛惛之事者， 无赫赫之功。 行衢道者不至， 事两君者不容。 目不能两视而明， 耳不能两听而聪。 螣蛇无足而飞， 鼫鼠五技而穷。 《诗》曰： “尸鸠在桑， 其子七兮。 淑人君子， 其仪一兮。 其仪一兮， 心如结兮！” 故君子结于一也。</p>
+<p>昔者瓠巴鼓瑟， 而流鱼出听； 伯牙鼓琴， 而六马仰秣。 故声无小而不闻， 行无隐而不形 。玉在山而草润， 渊生珠而崖不枯。 为善不积邪？ 安有不闻者乎？</p>
+<p>学恶乎始？ 恶乎终？ 曰： 其数则始乎诵经， 终乎读礼； 其义则始乎为士， 终乎为圣人， 真积力久则入， 学至乎没而后止也。 故学数有终， 若其义则不可须臾舍也。 为之， 人也； 舍 之， 禽兽也。 故书者， 政事之纪也； 诗者， 中声之所止也； 礼者， 法之大分， 类之纲纪也。 故学至乎礼而止矣。 夫是之谓道德之极。 礼之敬文也， 乐之中和也， 诗书之博也， 春秋之微 也， 在天地之间者毕矣。 君子之学也， 入乎耳， 着乎心， 布乎四体， 形乎动静。 端而言， 蝡而动， 一可以为法则。 小人之学也， 入乎耳， 出乎口； 口耳之间， 则四寸耳， 曷足以美七尺之躯哉！ 古之学者为己， 今之学者为人。 君子之学也， 以美其身； 小人之学也， 以为禽犊。 故不问而告谓之傲， 问一而告二谓之囋。 傲、 非也， 囋、 非也； 君子如向矣。<br>学莫便乎近其人。 礼乐法而不说， 诗书故而不切， 春秋约而不速。 方其人之习君子之说， 则尊以遍矣， 周于世矣。 故曰： 学莫便乎近其人。</p>
+<p>学之经莫速乎好其人， 隆礼次之。 上不能好其人， 下不能隆礼， 安特将学杂识志， 顺诗书而已耳。 则末世穷年， 不免为陋儒而已。 将原先王， 本仁义， 则礼正其经纬蹊径也。 若挈裘领， 诎五指而顿之， 顺者不可胜数也。 不道礼宪， 以诗书为之， 譬之犹以指测河也， 以戈舂黍也， 以锥餐壶也， 不可以得之矣。 故隆礼， 虽未明， 法士也； 不隆礼， 虽察辩， 散儒也。</p>
+<p>问楛者， 勿告也； 告楛者， 勿问也； 说楛者， 勿听也。 有争气者， 勿与辩也。 故必由其道至， 然后接之； 非其道则避之。 故礼恭， 而后可与言道之方； 辞顺， 而后可与言道之理； 色从而后可与言道之致。 故未可与言而言， 谓之傲； 可与言而不言， 谓之隐； 不观气色而言， 谓瞽。 故君子不傲、 不隐、 不瞽， 谨顺其身。 诗曰： “匪交匪舒， 天子所予。” 此之谓也。</p>
+<p>百发失一， 不足谓善射； 千里蹞步不至， 不足谓善御； 伦类不通， 仁义不一， 不足谓善学。 学也者， 固学一之也。 一出焉， 一入焉， 涂巷之人也； 其善者少， 不善者多， 桀纣盗跖也； 全之尽之， 然后学者也。</p>
+<p>君子知夫不全不粹之不足以为美也， 故诵数以贯之， 思索以通之， 为其人以处之， 除其害者以持养之。 使目非是无欲见也， 使耳非是无欲闻也， 使口非是无欲言也， 使心非是无欲虑也。 及至其致好之也， 目好之五色， 耳好之五声， 口好之五味， 心利之有天下。 是故权利不能倾也， 群众不能移也， 天下不能荡也。 生乎由是， 死乎由是， 夫是之谓德操。 德操然后能定， 能定然后能应。 能定能应， 夫是之谓成人。 天见其明， 地见其光， 君子贵其全也。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/25/荀子劝学/" data-id="cizsoq1gw000xke6qnla3b3kl" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-增广贤文-上" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/25/增广贤文-上/" class="article-date">
+  <time datetime="2017-02-25T12:17:35.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/鉴古/">鉴古</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/25/增广贤文-上/">增广贤文-上</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昔时贤文，诲汝谆谆。集韵增广，多见多闻。<br>观今宜鉴古，无古不成今。<br>知己知彼，将心比心。<br>酒逢知己饮，诗向会人吟。相识满天下，知心能几人？<br>相逢好似初相识，到老终无怨恨心。<br>近水知鱼性，近山识鸟音。<br>易涨易退山溪水，易反易覆小人心。<br>运去金成铁，时来铁似金。<br>读书须用意，一字值千金。<br>逢人且说三分话，未可全抛一片心。<br>有意栽花花不发，无心插柳柳成荫。<br>画虎画皮难画骨，知人知面不知心。<br>钱财如粪土，仁义值千金。<br>流水下滩非有意，白云出岫本无心。<br>当时若不登高望，谁信东流海洋深？<br>路遥知马力，日久见人心。<br>两人一般心，无钱堪买金；一人一般心，有钱难买针。<br>相见易得好，久处难为人。<br>马行无力皆因瘦，人不风流只为贫。<br>饶人不是痴汉，痴汉不会饶人。<br>是亲不是亲，非亲却是亲。<br>美不美，乡中水；亲不亲，故乡人。<br>莺花犹怕春光老，岂可教人枉度春？<br>相逢不饮空归去，洞口桃花也笑人。<br>红粉佳人休使老，风流浪子莫教贫。<br>在家不会迎宾客，出门方知少主人。<br>黄芩无假，阿魏无真。<br>客来主不顾，自是无良宾。<br>良宾主不顾，应恐是痴人。<br>贫居闹市无人问，富在深山有远亲。<br>谁人背后无人说，哪个人前不说人？<br>有钱道真语，无钱语不真。<br>不信但看筵中酒，杯杯先劝有钱人。<br>闹里有钱，静处安身。<br>来如风雨，去似微尘。<br>长江后浪推前浪，世上新人换旧人。<br>近水楼台先得月，向阳花木早逢春。<br>古人不见今时月，今月曾经照古人。<br>先到为君，后到为臣。<br>莫道君行早，更有早行人。<br>莫信直中直，须防仁不仁。<br>山中有直树，世上无直人。<br>自恨枝无叶，莫怨太阳偏。<br>大家都是命，半点不由人。<br>一年之计在于春，一日之计在于辰。<br>一家之计在于和，一生之计在于勤。<br>责人之心责己，恕己之心恕人。<br>守口如瓶，防意如城。<br>宁可人负我，切莫我负人。<br>再三须慎意，第一莫欺心。<br>虎生犹可近，人熟不堪亲。<br>来说是非者，便是是非人。<br>远水难救近火，远亲不如近邻。<br>有茶有酒多兄弟，急难何曾见一人？<br>人情似纸张张薄，世事如棋局局新。<br>山中也有千年树，世上难逢百岁人。<br>力微休负重，言轻莫劝人。<br>无钱休入众，遭难莫寻亲。<br>平生不做皱眉事，世上应无切齿人。<br>士乃国之宝，儒为席上珍。<br>若要断酒法，醒眼看醉人。<br>求人须求英雄汉，济人须济急时无。<br>渴时一滴如甘露，醉后添杯不如无。<br>久住令人贱，频来亲也疏。<br>酒中不语真君子，财上分明大丈夫。<br>贫贱之交不可忘，糟糠之妻不下堂。<br>出家如初，成佛有余。<br>积金千两，不如明解经书。<br>养子不教如养驴，养女不教如养猪。<br>有田不耕仓廪虚，有书不读子孙愚。<br>仓廪虚兮岁月乏，子孙愚兮礼仪疏。<br>同君一席话，胜读十年书。<br>人不通今古，马牛如襟裾。<br>茫茫四海人无数，哪个男儿是丈夫？<br>白酒酿成缘好客，黄金散尽为诗书。<br>救人一命，胜造七级浮屠。<br>城门失火，殃及池鱼。<br>庭前生瑞草，好事不如无。<br>欲求生富贵，须下死工夫。<br>百年成之不足，一旦坏之有余。<br>人心似铁，官法如炉。<br>善化不足，恶化有余。<br>水至清则无鱼，人至察则无徒。<br>知者减半，愚者全无。<br>在家由父，出嫁从夫。<br>痴人畏妇，贤女敬夫。<br>是非终日有，不听自然无。<br>竹篱茅舍风光好，道院僧房终不如。<br>宁可正而不足，不可邪而有余。<br>宁可信其有，不可信其无。<br>命里有时终须有，命里无时莫强求。<br>道院迎仙客，书堂隐相儒。<br>庭栽栖凤竹，池养化龙鱼。<br>结交须胜己，似我不如无。<br>但看三五日，相见不如初。<br>人情似水分高下，世事如云任卷舒。<br>会说说都是，不会说无理。<br>磨刀恨不利，刀利伤人指。<br>求财恨不多，财多害自己。<br>知足常足，终身不辱；<br>知止常止，终身不耻。<br>有福伤财，无福伤己。<br>失之毫厘，谬以千里。<br>若登高必自卑，若涉远必自迩。<br>三思而行，再思可矣。<br>使口不如亲为，求人不如求己。<br>小时是兄弟，长大各乡里。<br>嫉财莫嫉食，怨生莫怨死。<br>人见白头嗔，我见白头喜。<br>多少少年郎，不到白头死。<br>墙有缝，壁有耳。<br>好事不出门，坏事传千里。<br>若要人不知，除非己莫为。<br>为人不做亏心事，半夜敲门心不惊。<br>贼是小人，智过君子。<br>君子固穷，小人穷斯滥矣。<br>贫穷自在，富贵多忧。<br>不以我为德，反以我为仇。<br>宁向直中取，不可曲中求。<br>人无远虑，必有近忧。<br>知我者谓我心忧，不知我者谓我何求？<br>晴天不肯去，直待雨淋头。<br>成事莫说，覆水难收。<br>是非只为多开口，烦恼皆因强出头。<br>忍得一时之气，免得百日之忧。<br>近来学得乌龟法，得缩头时且缩头。<br>惧法朝朝乐，欺心日日忧。<br>人生一世，草长一秋。<br>月过十五光明少，人到中年万事休。<br>儿孙自有儿孙福，莫为儿孙做马牛。<br>为人莫做千年计，三十河东四十西。<br>人生不满百，常怀千岁忧。<br>今朝有酒今朝醉，明日愁来明日忧。<br>路逢险处须回避，事到临头不自由。<br>人贫不语，水平不流。<br>一家养女百家求，一马不行百马忧。<br>有花方酌酒，无月不登楼。<br>三杯通大道，一醉解千愁。<br>深山毕竟藏猛虎，大海终须纳细流。<br>惜花须检点，爱月不梳头。<br>大抵选她肌骨好，不搽红粉也风流。<br>受恩深处宜先退，得意浓时便可休。<br>莫待是非来入耳，从前恩爱反为仇。<br>留得五湖明月在，不愁无处下金钩。<br>休别有鱼处，莫恋浅滩头。<br>去时终须去，再三留不住。<br>忍一句，息一怒，饶一着，退一步。<br>三十不豪，四十不富，五十将衰寻子助。<br>生不认魂，死不认尸。<br>一寸光阴一寸金，寸金难买寸光阴。<br>黑发不知勤学早，转眼便是白头翁。<br>父母恩深终有别，夫妻义重也分离。<br>人生似鸟同林宿，大难来时各自飞。<br>人善被人欺，马善被人骑。<br>人无横财不富，马无夜草不肥。<br>人恶人怕天不怕，人善人欺天不欺。<br>善恶到头终有报，只盼来早与来迟。<br>黄河尚有澄清日，岂能人无得运时？<br>得宠思辱，居安思危。<br>念念有如临敌日，心心常似过桥时。<br>英雄行险道，富贵似花枝。<br>人情莫道春光好，只怕秋来有冷时。<br>送君千里，终有一别。<br>但将冷眼观螃蟹，看你横行到几时。<br>见事莫说，问事不知。<br>闲事莫管，无事早归。<br>假缎染就真红色，也被旁人说是非。<br>善事可做，恶事莫为。<br>许人一物，千金不移。<br>龙生龙子，虎生虎儿。<br>龙游浅水遭虾戏，虎落平阳被犬欺。<br>一举首登龙虎榜，十年身到凤凰池。<br>十年寒窗无人问，一举成名天下知。<br>酒债寻常处处有，人生七十古来稀！<br>养儿防老，积谷防饥。<br>鸡豚狗彘之畜，无失其时，数口之家，可以无饥矣。<br>当家才知盐米贵，养子方知父母恩。<br>常将有日思无日，莫把无时当有时。<br>树欲静而风不止，子欲养而亲不待。<br>时来风送滕王阁，运去雷轰荐福碑。<br>入门休问荣枯事，且看容颜便得知。<br>官清司吏瘦，神灵庙祝肥。<br>息却雷霆之怒，罢却虎豹之威。<br>饶人算之本，输人算之机。<br>好言难得，恶语易施。<br>一言既出，驷马难追。<br>道吾好者是吾贼，道吾恶者是吾师。<br>路逢侠客须呈剑，不是才人莫献诗。<br>三人同行，必有我师。择其善者而从之，其不善者而改之。<br>欲昌和顺须为善，要振家声在读书。<br>少壮不努力，老大徒伤悲。<br>人有善愿，天必佑之。<br>莫饮卯时酒，昏昏醉到酉。<br>莫骂酉时妻，一夜受孤凄。<br>种麻得麻，种豆得豆。<br>天眼恢恢，疏而不漏。<br>做官莫向前，作客莫在后。<br>宁添一斗，莫添一口。<br>螳螂捕蝉，岂知黄雀在后？<br>不求金玉重重贵，但愿儿孙个个贤。<br>一日夫妻，百世姻缘。<br>百世修来同船渡，千世修来共枕眠。<br>杀人一万，自损三千。<br>伤人一语，利如刀割。<br>枯木逢春犹再发，人无两度再少年。<br>未晚先投宿，鸡鸣早看天。<br>将相顶头堪走马，公侯肚内好撑船。<br>富人思来年，穷人想眼前。<br>世上若要人情好，赊去物品莫取钱。<br>生死有命，富贵在天。<br>击石原有火，不击乃无烟。<br>人学始知道，不学亦徒然。<br>莫笑他人老，终须还到老。<br>和得邻里好，犹如拾片宝。<br>但能守本分，终身无烦恼。<br>大家做事寻常，小家做事慌张。<br>大家礼义教子弟，小家凶恶训儿郎。<br>君子爱财，取之有道。<br>贞妇爱色，纳之以礼。<br>善有善报，恶有恶报。<br>不是不报，时候未到。<br>万恶淫为首，百善孝当先。<br>人而无信，不知其可也。<br>一人道虚，千人传实。<br>凡事要好，须问三老。<br>若争小利，便失大道。<br>家中不和邻里欺，邻里不和说是非。<br>年年防饥，夜夜防盗。<br>学者是好，不学不好。<br>学者如禾如稻，不学如草如蒿。<br>遇饮酒时须防醉，得高歌处且高歌。<br>因风吹火，用力不多。<br>不因渔夫引，怎能见波涛？<br>无求到处人情好，不饮任他酒价高。<br>知事少时烦恼少，识人多处是非多。<br>进山不怕伤人虎，只怕人情两面刀。<br>强中更有强中手，恶人须用恶人磨。<br>会使不在家富豪，风流不用衣着多。<br>光阴似箭，日月如梭。<br>天时不如地利，地利不如人和。<br>黄金未为贵，安乐值钱多。<br>为善最乐，作恶难逃。<br>羊有跪乳之恩，鸦有反哺之情。<br>孝顺还生孝顺子，忤逆还生忤逆儿。<br>不信但看檐前水，点点滴滴旧池窝。<br>隐恶扬善，执其两端。<br>妻贤夫祸少，子孝父心宽。<br>已覆之水，收之实难。<br>人生知足时常足，人老偷闲且是闲。<br>处处绿杨堪系马，家家有路通长安。<br>既坠釜甑，反顾无益。<br>见者易，学者难。莫将容易得，便作等闲看。<br>厌静还思喧，嫌喧又忆山。<br>自从心定后，无处不安然。<br>用心计较般般错，退后思量事事宽。<br>道路各别，养家一般。<br>由俭入奢易，从奢入俭难。<br>知音说与知音听，不是知音莫与谈。<br>点石化为金，人心犹未足。<br>信了赌，卖了屋。<br>他人观花，不涉你目。<br>他人碌碌，不涉你足。<br>谁人不爱子孙贤，谁人不爱千钟粟。<br>奈五行，不是这般题目。<br>莫把真心空计较，儿孙自有儿孙福。<br>书到用时方恨少，事非经过不知难。<br>天下无不是的父母，世上最难得者兄弟。<br>与人不和，劝人养鹅；与人不睦，劝人架屋。<br>但行好事，莫问前程。不交僧道，便是好人。<br>河狭水激，人急计生。<br>明知山有虎，莫向虎山行。<br>路不铲不平，事不为不成。<br>无钱方断酒，临老始读经。<br>点塔七层，不如暗处一灯。<br>堂上二老是活佛，何用灵山朝世尊。<br>万事劝人休瞒昧，举头三尺有神明。<br>但存方寸土，留与子孙耕。<br>灭却心头火，剔起佛前灯。<br>惺惺多不足，蒙蒙作公卿。<br>众星朗朗，不如孤月独明。<br>兄弟相害，不如友生。<br>合理可作，小利不争。<br>牡丹花好空入目，枣花虽小结实多。<br>欺老莫欺小，欺人心不明。<br>勤奋耕锄收地利，他时饱暖谢苍天。<br>得忍且忍，得耐且耐，不忍不耐，小事成灾。<br>相论逞英豪，家计渐渐退。<br>贤妇令夫贵，恶妇令夫败。<br>一人有庆，兆民咸赖。<br>人老心未老，人穷志莫穷。<br>人无千日好，花无百日红。<br>黄蜂一口针，橘子两边分。<br>世间痛恨事，最毒淫妇心。<br>杀人可恕，情理不容。<br>乍富不知新受用，乍贫难改旧家风。<br>座上客常满，杯中酒不空。<br>屋漏更遭连夜雨，行船又遇打头风。<br>笋因落箨方成竹，鱼为奔波始化龙。<br>记得少年骑竹马，转眼又是白头翁。<br>礼义生于富足，盗贼出于赌博。<br>天上众星皆拱北，世间无水不朝东。<br>士为知己者死，女为悦己者容。<br>色即是空，空即是色。<br>君子安贫，达人知命。<br>良药苦口利于病，忠言逆耳利于行。<br>顺天者昌，逆天者亡。<br>有缘千里来相会，无缘对面不相逢。<br>有福者昌，无福者亡。<br>人为财死，鸟为食亡。<br>夫妻相和好，琴瑟与笙簧。<br>红粉易妆娇态女，无钱难作好儿郎。<br>有子之人贫不久，无儿无女富不长。<br>善必寿老，恶必早亡。<br>爽口食多偏作病，快心事过恐遭殃。<br>富贵定要依本分，贫穷不必再思量。<br>画水无风空作浪，绣花虽好不闻香。<br>贪他一斗米，失却半年粮。<br>争他一脚豚，反失一肘羊。<br>龙归晚洞云犹湿，麝过春山草木香。<br>平生只会说人短，何不回头把己量？<br>见善如不及，见恶如探汤。<br>人穷志短，马瘦毛长。<br>自家心里急，他人未知忙。<br>贫无达士将金赠，病有高人说药方。<br>触来莫与竞，事过心清凉。<br>秋来满山多秀色，春来无处不花香。<br>凡人不可貌相，海水不可斗量。<br>清清之水为土所防，济济之士为酒所伤。<br>蒿草之下或有兰香，茅茨之屋或有侯王。<br>无限朱门生饿殍，几多白屋出公卿。<br>酒里乾坤大，壶中日月长。<br>拂石坐来春衫冷，踏花归去马蹄香。<br>万事前身定，浮生空自忙。<br>叫月子规喉舌冷，宿花蝴蝶梦魂香。<br>一言不中，千言不用。<br>一人传虚，百人传实。<br>万金良药，不如无疾。<br>千里送鹅毛，礼轻情义重。<br>世事如明镜，前程暗似漆。<br>君子怀刑，小人怀惠。<br>架上碗儿轮流转，媳妇自有做婆时。<br>人生一世，如驹过隙。<br>良田万顷，日食一升。<br>大厦千间，夜眠八尺。<br>千经万典，孝义为先。<br>天上人间，方便第一。<br>一字入公门，九牛拔不出。<br>八字衙门向南开，有理无钱莫进来。<br>欲求天下事，须用世间财。<br>富从升合起，贫因不算来。<br>近河不得枉使水，近山不得枉烧柴。<br>家无读书子，官从何处来？<br>慈不掌兵，义不掌财。<br>一夫当关，万夫莫开。<br>万事不由人计较，一生都是命安排。<br>白云本是无心物，却被清风引出来。<br>慢行急行，逆取顺取。<br>命中只有如许财，丝毫不可有闪失。<br>人间私语，天闻若雷。<br>暗室亏心，神目如电。<br>一毫之恶，劝人莫作。一毫之善，与人方便。<br>亏人是祸，饶人是福，天眼恢恢，报应甚速。<br>圣贤言语，神钦鬼服。<br>人各有心，心各有见。<br>口说不如身逢，耳闻不如目见。<br>见人富贵生欢喜，莫把心头似火烧。<br>养兵千日，用在一时。<br>国清才子贵，家富小儿娇。<br>利刀割体疮犹使，恶语伤人恨不消。<br>公道世间唯白发，贵人头上不曾饶。<br>有才堪出众，无衣懒出门。<br>为官须作相，及第必争先。<br>苗从地发，树由枝分。<br>宅里燃火，烟气成云。<br>以直报怨，知恩报恩。<br>红颜今日虽欺我，白发他时不放君。<br>借问酒家何处有，牧童遥指杏花村。<br>父子和而家不退，兄弟和而家不分。<br>一片云间不相识，三千里外却逢君。<br>官有公法，民有私约。<br>平时不烧香，临时抱佛脚。<br>幸生太平无事日，恐防年老不多时。<br>国乱思良将，家贫思良妻。<br>池塘积水须防旱，田地深耕足养家。<br>根深不怕风摇动，树正何愁月影斜。<br>争得猫儿，失却牛脚。<br>愚者千虑，必有一得，智者千虑，必有一失。<br>始吾于人也，听其言而信其行。<br>今吾于人也，听其言而观其行。<br>哪个梳头无乱发，情人眼里出西施。<br>珠沉渊而川媚，玉韫石而山辉。<br>夕阳无限好，只恐不多时。<br>久旱逢甘霖，他乡遇故知；洞房花烛夜，金榜题名时。<br>惜花春起早，爱月夜眠迟。<br>掬水月在手，弄花香满衣。<br>桃红李白蔷薇紫，问着东君总不知。<br>教子教孙须教义，栽桑栽柘少栽花。<br>休念故乡生处好，受恩深处便为家。<br>学在一人之下，用在万人之上。<br>一日为师，终生为父。<br>忘恩负义，禽兽之徒。<br>劝君莫将油炒菜，留与儿孙夜读书。<br>书中自有千钟粟，书中自有颜如玉。<br>莫怨天来莫怨人，五行八字命生成。<br>莫怨自己穷，穷要穷得干净；莫羡他人富，富要富得清高。<br>别人骑马我骑驴，仔细思量我不如，<br>待我回头看，还有挑脚汉。<br>路上有饥人，家中有剩饭。<br>积德与儿孙，要广行方便。<br>作善鬼神钦，作恶遭天遣。<br>积钱积谷不如积德，买田买地不如买书。<br>一日春工十日粮，十日春工半年粮。<br>疏懒人没吃，勤俭粮满仓。<br>人亲财不亲，财利要分清。<br>十分伶俐使七分，常留三分与儿孙，<br>若要十分都使尽，远在儿孙近在身。<br>君子乐得做君子，小人枉自做小人。<br>好学者则庶民之子为公卿，不好学者则公卿之子为庶民。<br>惜钱莫教子，护短莫从师。<br>记得旧文章，便是新举子。<br>人在家中坐，祸从天上落。<br>但求心无愧，不怕有后灾。<br>只有和气去迎人，哪有相打得太平。<br>忠厚自有忠厚报，豪强一定受官刑。<br>人到公门正好修，留些阴德在后头。<br>为人何必争高下，一旦无命万事休。<br>山高不算高，人心比天高。<br>白水变酒卖，还嫌猪无糟。<br>贫寒休要怨，宝贵不须骄。<br>善恶随人作，祸福自己招。<br>奉劝君子，各宜守己。<br>只此呈示，万无一失。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/02/25/增广贤文-上/" data-id="cizsoq1f00005ke6qhuu7lz0b" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-留侯论" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/25/留侯论/" class="article-date">
@@ -99,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/留侯论/" data-id="cizqzznuq000agw6qd3gov7xi" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/25/留侯论/" data-id="cizsoq1fs000jke6qob9eff90" class="article-share-link">分享</a>
       
       
     </footer>
@@ -144,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/21/hello-world/" data-id="cizqzznv0000fgw6qtgke7gm8" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/21/hello-world/" data-id="cizsoq1fj000eke6qj6dnw352" class="article-share-link">分享</a>
       
       
     </footer>
@@ -167,7 +394,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
     </div>
   </div>
 
@@ -195,23 +422,23 @@
       <ul>
         
           <li>
-            <a href="/2017/03/01/Cocoapod安装与简单使用/">Cocoapod安装与简单使用</a>
+            <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/MAC下使用CLOC进行代码量统计/">MAC下使用CLOC进行代码量统计</a>
+            <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/Homebrew/">Homebrew</a>
+            <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/Block/">Block</a>
+            <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/GCD/">GCD</a>
+            <a href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
           </li>
         
       </ul>
@@ -225,6 +452,7 @@
     <div class="widget">
     <ul>
       <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://blog.sunnyxx.com/" target="_blank">sunnyxx</a></li>
       <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
       <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
       <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>

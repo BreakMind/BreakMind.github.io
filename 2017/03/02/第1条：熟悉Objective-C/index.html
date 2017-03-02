@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第1条-熟悉Objective-C | Talk is cheap, show me the code.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="第一章节熟悉Objective-C
+Objective-C通过一套全新语法，在C语言基础上添加了面向对象特性。Objective-C的语法中频繁使用方括号，而且不吝于写出极长的方法名，这通常令许多人觉得此语言为冗长。其实这样写出来的代码十分易读，只是C++或Java程序员不太能适应。
+Objective-C语言学起来很快，但有很多微妙细节需要注意，而且还有许多容易为人所忽视的特性。另一方面，有些开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1条-熟悉Objective-C">
+<meta property="og:url" content="http://BreakMind.github.io/2017/03/02/第1条：熟悉Objective-C/index.html">
+<meta property="og:site_name" content="Talk is cheap, show me the code.">
+<meta property="og:description" content="第一章节熟悉Objective-C
+Objective-C通过一套全新语法，在C语言基础上添加了面向对象特性。Objective-C的语法中频繁使用方括号，而且不吝于写出极长的方法名，这通常令许多人觉得此语言为冗长。其实这样写出来的代码十分易读，只是C++或Java程序员不太能适应。
+Objective-C语言学起来很快，但有很多微妙细节需要注意，而且还有许多容易为人所忽视的特性。另一方面，有些开">
+<meta property="og:updated_time" content="2017-03-02T17:46:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1条-熟悉Objective-C">
+<meta name="twitter:description" content="第一章节熟悉Objective-C
+Objective-C通过一套全新语法，在C语言基础上添加了面向对象特性。Objective-C的语法中频繁使用方括号，而且不吝于写出极长的方法名，这通常令许多人觉得此语言为冗长。其实这样写出来的代码十分易读，只是C++或Java程序员不太能适应。
+Objective-C语言学起来很快，但有很多微妙细节需要注意，而且还有许多容易为人所忽视的特性。另一方面，有些开">
+  
+    <link rel="alternate" href="/atom.xml" title="Talk is cheap, show me the code." type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Talk is cheap, show me the code.</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/">个人简介</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://BreakMind.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第1条：熟悉Objective-C" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第1条：熟悉Objective-C/" class="article-date">
+  <time datetime="2017-03-01T16:03:55.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      第1条-熟悉Objective-C
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一章节<br>熟悉Objective-C</p>
+<p>Objective-C通过一套全新语法，在C语言基础上添加了面向对象特性。Objective-C的语法中频繁使用方括号，而且不吝于写出极长的方法名，这通常令许多人觉得此语言为冗长。其实这样写出来的代码十分易读，只是C++或Java程序员不太能适应。</p>
+<p>Objective-C语言学起来很快，但有很多微妙细节需要注意，而且还有许多容易为人所忽视的特性。另一方面，有些开发者并未完全理解或是滥用某些特性，导致写出来的代码难于维护且不易调试。本章讲解基础知识，后续各章谈论语言及其相关框架中的各个特定话题。</p>
+<h2 id="第一条：了解Objective-C语言的起源"><a href="#第一条：了解Objective-C语言的起源" class="headerlink" title="第一条：了解Objective-C语言的起源"></a>第一条：了解Objective-C语言的起源</h2><p>Objective-C与C++、Java等面向对象语言类似，不过很多方面有所差别。若是用过另一种面向对象语言，那么就能理解Objective-C所用的许多范式与模板了。然而语法上也许会显得陌生，因为该语言使用“消息结构”（messaging struct）而非“函数调用”（function calling）。Objective-C语言由Smalltalk演化而来，后者是消息型语言的鼻祖。消息与函数调用之间的区别看上去就像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Messaging (Objective-C)</div><div class="line">Object * obj = [Object new];</div><div class="line">[obj performWith:parameter1 and:parameter2];</div><div class="line"></div><div class="line">// Function calling (C++)</div><div class="line">Object * obj = new Object;</div><div class="line">obj-&gt;perform(parameter1, parameter2);</div></pre></td></tr></table></figure></p>
+<p>关键区别在于：使用消息结构的语言，其运行时所应执行的代码由运行环境来决定；而使用函数调用的语言，则由编译器决定。如果范例代码中调用的函数是多态的，那么在运行时就就要按照“虚函数表（virtual table）”来查出到底应该执行哪个函数实现。而采用消息结构的语言，不论是否多态，总是在运行时才会去查找所要执行的方法。实际上，编译器甚至不关心接收消息的对象是何种类型。接收消息的对象问题也要在运行时处理，其过程叫做“动态绑定（dynamic binding）”，第11条会详述其细节。</p>
+<p>Objective-C的重要工作都由“运行期组件”（runtime component）而非编译器来完成。使用Objective-C的面向对象特性所需的全部数据结构及函数都在运行期组件里面。举例来说，运行期组件中含有全部内存管理方法。运行期组件本质上就是一种与开发者所编代码相链接的“动态库”（dynamic library），其代码能把开发者编写的所有程序粘合起来。这样的话，只需更新运行期组件，即可提升应用程序性能。而那种许多工作都在“编译期”（compile time）完成的语言，若想获得类似的性能提升，则要重新编译应用程序代码。</p>
+<p>Objective-C是C的“超集”（superset），所以C语言中的所有功能在编写Objective-C代码时依然适用。因此，必须同时掌握C与Objective-C这两门语言的核心概念，方能写出高效的Objective-C代码来。其中尤为重要的是理解C语言的内存模型（memory model），这有助于理解Objective-C的内存模型及其“引用计数”（reference counting）机制的工作原理。若要理解内存模型，则需明白：Objective-C语言中的指针是用来指示对象的。想要声明一个变量，令其指代某个对象，可用如下语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString * someString = @&quot;The string&quot;;</div></pre></td></tr></table></figure></p>
+<p>这种语法基本上是照搬C语言的，它声明了一个名为someThing的变量，其类型是NSString*。也就是说，此变量为指向NSString的指针。所有Objective-C语言的对象都必须这样声明，因为对象所占内存总是分配在“堆控件”（heap space）中，而绝不会分配在“栈”（stack）上。不能再栈上分配Objective-C对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString stackString;</div><div class="line">// error: interface type cannot be statically allocated</div></pre></td></tr></table></figure></p>
+<p>someString变量指向分配在堆里的某块内存，其中含有一个NSString对象。也就是说，如果再创建一个变量，令其指向同一地址，那么并不拷贝该对象，只是这两个变量会同时指向此对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *someString = @&quot;The string&quot;;</div><div class="line">NSString *anotherString = someString;</div></pre></td></tr></table></figure></p>
+<p>只有一个NSString实例，然而又两个变量指向此实例。两个变量都是NSString*型，这说明当期那“栈帧”（stack frame）里面分配了两块内存，每块内存的带下都能容下一枚指针（在32位架构的计算机上是4字节，64位计算机上是8字节）。这两块内存里的值都一样，就是NSString实例的内存地址。</p>
+<p>图1-1 描述了此时的内存布局。存放在NSString实例中的数据含有代表字符串实际内容的字节。</p>
+<pre><code>图1-1 此内存布局图演示了一个分配在堆中的NSString实例，有两个分配在栈上的指针指向该实例
+</code></pre><p>分配在堆中的内存必须直接管理，而分配在栈上用于保存变量的内存则会在其栈帧弹出时自动清理。</p>
+<p>Objective-C将堆内存管理抽象出来了。不需要用malloc及free来分配或释放对象所占内存。Objective-C运行期环境把这部分工作抽象为一套内存管理架构，名叫“引用计数”（参见第29条）。</p>
+<p>在Objective-C代码中，有时会遇到定义里不含* 变量，他们可能会使用“栈控件”（stack space）。这些变量所保存的不是Objective-C对象。比如CoreGraphic框架中的CGRect就是个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CGRect frame;</div><div class="line">frame.origin.x = 0.0f;</div><div class="line">frame.origin.y = 10.0f;</div><div class="line">frame.size.width = 100.0f;</div><div class="line">frame.size.height = 150.0f;</div></pre></td></tr></table></figure></p>
+<p>CGRect是C结构体，其定义是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct CGRect&#123;</div><div class="line">	CGPoint origin;</div><div class="line">	CGSize size;</div><div class="line">&#125;;</div><div class="line">typedef struct CGRect CGRect;</div></pre></td></tr></table></figure></p>
+<p>整个系统框架都在使用这种结构体，因为如果改用Objective-C对象来做的花，性能会受影响。与创建结构体相比，创建对象还需要额外开销，例如分配及释放堆内存等。如果只需要保存int、float、double、char等“非对象类型”（nonobject type），那么通常使用CGRect这种结构体就可以了。</p>
+<p>在着手编写Objective-C代码之前，建议读者先看看C语言教程，以熟悉其语法。若是还没熟悉C语言就直接进入Objective-C的话，那么某些语法也许会令你困惑。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>Objective-C为C语言添加了面向对象特性，是其超集。Objective-C使用动态绑定的消息结构，也就是说，在运行时才会检查对象类型。接受一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定。<br>理解C语言的核心概念有助于写好Objective-C程序。尤其要掌握内存模型与指针。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第1条：熟悉Objective-C/" data-id="cizsoq1ff000cke6qq7wqakdr" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">新的</strong>
+      <div class="article-nav-title">
+        
+          第2条：在类的头文件中尽量少引入其他都文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/01/Cocoapod安装与简单使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">旧的</strong>
+      <div class="article-nav-title">Cocoapod安装与简单使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-第1条：熟悉Objective-C" data-title="第1条-熟悉Objective-C" data-url="http://BreakMind.github.io/2017/03/02/第1条：熟悉Objective-C/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'breakmind'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">相关博客</h3>
+    <div class="widget">
+    <ul>
+      <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://blog.sunnyxx.com/" target="_blank">sunnyxx</a></li>
+      <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
+      <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
+      <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>
+      <li><a href="http://www.shellsec.com/news/8114.html" target="_blank">BAT 面试指南</a></li>
+      <li><a href="http://blog.csdn.net/yiyaaixuexi/" target="_blank">念茜</a></li>
+      <li><a href="http://blog.txx.im/" target="_blank">TXX</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 BreakMind<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/" class="mobile-nav-link">个人简介</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -63,6 +63,311 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-第5条：用枚举表示状态、选项、状态码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/" class="article-date">
+  <time datetime="2017-03-02T15:50:32.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于Objective-C基于C语言，所以C语言有的功能它都有。其中之一就是枚举类型：enum。系统框架中频繁用到此类型，然而开发者容易忽视它。在以一系列常量来表示错误状态码或可组合的选项时，极宜使用枚举为其命名。由于C++11标注扩充了枚举的特性，所以最新版本系统框架使用了“强类型”（strong type）的枚举。没错，Objective-C也得益于C++11标准。<br>枚举只是一种常量命名方式。某个对象所经历的各种状态就可以定义为一个简单的枚举集（enumeration set）。比如说，可以用下列枚举表示“套接字链接”（socket connection）的状态：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionState&#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>由于每种状态都用一个便于理解的值来表示，所以这样写出来的代码更易读懂。编译器会为枚举分配一个独有的编号，从0开始，每个枚举值递增为1.实现枚举所用的数据类型取决于编译器。不过其二进制位（bit）的个数必须能完全表示下枚举编号才行。在前例中，由于最大编号是2，所以使用1个字节的char类型即可。<br>然而定义枚举变量的方式却不太简洁，要依如下语法编写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionState state = EOCConnectionStateDisconnected;</div></pre></td></tr></table></figure></p>
+<p>若是每次不用敲入enum而只需写EOCConnectionState就好了。要想这样做，则需使用typedef关键字重新定义枚举类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionState&#123;</div><div class="line">	EOCConnectionStateDisconnected = 0,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div><div class="line">typedef enum EOCConnectionState EOCConnectionState;</div></pre></td></tr></table></figure></p>
+<p>也可以简略写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">typedef enum EOCConnectionState&#123;</div><div class="line">	EOCConnectionStateDisconnected = 0,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;EOCConnectionState;</div></pre></td></tr></table></figure></p>
+<p>现在可以用简写的EOCConnectionState来代替完整的enum EOCConnectionState了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EOCConnectionState state = EOCConnectionStateDisconnected;</div></pre></td></tr></table></figure></p>
+<p>C++标准修订了枚举的某些特性。其中一项改动是：可以指明用何种“底层数据类型”（underlying type）来保存枚举类型的变量。这样做的好处是，可以向前声明枚举变量了。若不指定底层数据类型，则无法向前声明枚举类型，因为编译器不清楚底层数据类型的大小，所以在用到此枚举类型时，也就不知道究竟该给变量分配多少空间。<br>指定底层数据类型所用的语法是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionStateConnectionState : NSInteger &#123; /* ... */ &#125;;</div></pre></td></tr></table></figure></p>
+<p>上面这行代码确保枚举的底层数据类型是NSInteger。也可以在向前声明时指定底层数据类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionStateConnectionState : NSInteger;</div></pre></td></tr></table></figure></p>
+<p>还可以不使用编译器所分配的序号，而是手工指定某个枚举成员所对应的值。语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">enum EOCConnectionStateConnectionState&#123;</div><div class="line">	EOCConnectionStateDisconnected = 1,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>上述代码把EOCConnectionStateDisconnected的值设为1，而不使用编译器所分配的0。如前所述，接下来几个枚举的值都会在上一个的基础上递增1。比如说，EOCConnectionStateConnected的值就是3。<br>还有一种情况应该使用枚举类型，那就是定义选项的时候。若这些选项可以彼此组合，则更应如此。只要枚举定义得对，个选项之间就可通过“按位或操作符”（bitwise OR operator）来组合。例如，IOS UI框架中有如下的枚举类型，用来表示某个视图应该如何在水平或垂直方向上调整大小：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">enum UIViewAutoresizing &#123;</div><div class="line">	UIViewAutoresizingNozne				= 0,</div><div class="line">	UIViewAutoresizingFlexibleLeftMargin		= 1 &lt;&lt; 0,</div><div class="line">	UIViewAutoresizingFlexibleWidth			= 1 &lt;&lt; 1,</div><div class="line">	UIViewAutoresizingFlexibleRightMargin		= 1 &lt;&lt; 2,</div><div class="line">	UIViewAutoresizingFlexibleTopMargin		= 1 &lt;&lt; 3,</div><div class="line">	UIViewAutoresizingFlexibleHeight		= 1 &lt;&lt; 4,</div><div class="line">	UIViewAutoresizingFlexibleBottomMargin		= 1 &lt;&lt; 5,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>每个选项均可开启或禁用，使用上述方式来定义枚举值即可保证这一点，因为在每个枚举值所对应的二进制表示中，只有1个二进制位的值是1。用“按位或操作符”可组合多个选项，例如：UIViewAutoResizingFlexibleWidth | UIViewAutoresizingFlexibleHeight。图1-2列出了每个枚举成员的二进制值，并演示了刚才那两个枚举组合之后的值。用“按位与操作符”（bitwise AND operator）即可判断出是否已启用某个选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">enum UIViewAutoresizing resizing = </div><div class="line">	UIViewAutoresizingFlexibleWidth |</div><div class="line">	UIViewAutoresizingFlexibleHeight ;</div><div class="line"></div><div class="line">if (resizing &amp; UIViewAutoresizingFlexibleWidth) &#123;</div><div class="line">	// UIViewAutoresizingFlexibleWidht is set</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<pre><code>图1-2 每个枚举值的二进制表示，以及对其中两个枚举值执行按位或操作之后的二进制值
+</code></pre><p>系统库中频繁使用这个办法。 IOS UI框架中的UIKit里还有个例子，用枚举值告诉系统视图所支持的设备显示方向。这个枚举类型叫做UIInterfaceOrientationMask，开发者需要实现一个名为supportedInterfaceOrientations的方法，将视图所支持的显示方向告诉系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (NSUInteger)supportedInterfaceOrientations &#123;</div><div class="line">	return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Foundation框架中定义了一些辅助的宏，用这些红来定义枚举类型时，也可以指定用于保存枚举值得底层数据类型。这些宏具备向后兼容（backward compatibility）能力，如果目标平台的编译器支持新标注，那就使用新式语法，否则改用旧式鱍。这些宏是用#define预处理指令来定义的，其中一个用于定义像EOCConnectionState这种普通的枚举类型，另一个定义像UIViewAutoresizing这种包含一系列选项的枚举类型，其用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSUInteger, EOCConnectionState) &#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">typedef NS_OPTIONS(NSUinteger, EOCPermittedDirection)&#123;</div><div class="line">	EOCPermittedDirectionUp		= 1 &lt;&lt; 0,</div><div class="line">	EOCPermittedDirectionDown	= 1 &lt;&lt; 1,</div><div class="line">	EOCPermittedDirectionLeft	= 1 &lt;&lt; 2,</div><div class="line">	EOCPermittedDirectionRight	= 1 &lt;&lt; 3,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这些宏的定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#if (__cplusplus &amp;&amp; __cplusplus &gt;= 201103L &amp;&amp; (__has_extension(cxx_strong_enums) || _has_feature(objc_fixed_enum))</div><div class="line">	)||</div><div class="line">    (!__cplusplus &amp;&amp; __has_feature(objc_fixed_enum))</div><div class="line">    #define NS_ENUM(_type, _name)</div><div class="line">		enum _name : _type _name; enum _name : type</div><div class="line">    #if (__cplusplus)</div><div class="line">	#define NS_OPTIONS(_type, _name)</div><div class="line">		type _name; enum : _type</div><div class="line">    #else</div><div class="line">	#define NS_OPTIONS(_type, _name)</div><div class="line">		enum _name : _type _name; enum _name : type</div><div class="line">    #endif</div><div class="line">#else</div><div class="line">    #define NS_ENUM(_type, _name) _type _name; enum</div><div class="line">    #define NS_OPTIONS(_type, _name) _type _name; enum</div><div class="line">#endif</div></pre></td></tr></table></figure></p>
+<p>由于需要分别处理不同情况，所以上述代码用多种方式来定义这两个宏。第一个#if用于判断编译器是否支持新式枚举。其中所用的布尔逻辑看上去相当复杂，不&gt;过其意思就是想判断编译器是否支持新的枚举特性。如果不支持，那么久用老式语法来定义枚举。<br>如果支持新特性，那么用NS_ENUM宏所定义的枚举类型展开后就是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">typedef enum EOCConnectinState : NSUInteger EOCConnectionState;</div><div class="line">enum EOCConnectionState : NSUInteger &#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>根据是否要将代码按C++模式编译，NS_OPTIONS宏的定义方式也有所不同。如果不按C++编译，那么其展开方式就和NS_ENUM相同。若按C++编译，则展开后的代码略有不同。原因在于，用按位或运算来操作两个枚举值时，C++编译模式的处理办法与非C++模式不一样。而上面已经提到了，作为选项的枚举值经常需要用按位或运算来组合。在用或运算操作两个枚举值时，C++认为运算结果的数据类型应该是枚举的底层数据类型，也就是NSUInteger。而且C++不允许将这个底层类型“隐式转换”（implicit cast）为枚举类型本身。我们用EOCPermittedDirection来演示一下，假设按NS_ENUM方式将其展开：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">typedef enum EOCPermittedDirection : int EOCPermittedDirection;</div><div class="line">enum EOCPermittedDirection : int &#123;</div><div class="line">	EOCPermittedDirectionUp		= 1 &lt;&lt; 0,</div><div class="line">	EOCPermittedDirectionDown	= 1 &lt;&lt; 1,</div><div class="line">	EOCPermittedDirectionLeft	= 1 &lt;&lt; 2,</div><div class="line">	EOCPermittedDirectionRight	= 1 &lt;&lt; 3,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>然后考虑下列代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EOCPermittedDirection permittedDirections = EOCPermittedDirectionLeft | EOCPermittedDirectionUp;</div></pre></td></tr></table></figure></p>
+<p>若编译器按C++模式编译（也可能是按Objective-C++模式编译），则会给出下列错误信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error: cannot initilize a variable of type</div><div class="line">&apos;EOCPermittedDirection&apos; with an rvalue of type &apos;int&apos;</div></pre></td></tr></table></figure></p>
+<p>如果想编译这行代码，就要将按位或操作的结果显式转换（explicit cast）为EOCPermittedDirection。所以，在C++模式下应该用另一种方式定义NS_OPTIONS宏，以便省去类型转换操作。鉴于此，凡是需要以按位或操作来组合的枚举都应使用NS_OPTIONS定义。若是枚举不需要互相组合，则应使用NS_ENUM来定义。</p>
+<p>能够用到枚举的情况还有很多。前面已经提到，枚举可以表示选项与状态，然而还有许多东西也能用枚举来表示。比如状态码就是个好例子。可以把逻辑含义相似的一组状态码放入同一枚举集里，而不要用#define预处理指令或常量来定义。以枚举来表示样式（style）也很合宜。假如创建某个UI元素时可以使用不同的样式，那么在这种情况下就最应该把样式声明为枚举类型了。</p>
+<p>最后再讲一种枚举的用法，就是在switch语句里。有时可以这样定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSUInteger, EOCConnectionState)&#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">switch (_currentState) &#123;</div><div class="line">	EOCConnectionStateDisconnected:</div><div class="line">	// Handle disconnected state</div><div class="line">	break;</div><div class="line">	EOCConnectionStateConnecting:</div><div class="line">	// Handle connecting state</div><div class="line">	break;</div><div class="line">	EOCConnectionStateConnected:</div><div class="line">	// Handle connected state</div><div class="line">	break;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们总习惯在switch语句上加上default分支。然而，若是用枚举来定义状态机（State machine），则最好不要有default分支。这样的花，如果稍后又加了一种状态，那么编译器就会发出警告信息，提示新加入的状态并未在switch分支中处理。假如写上了default分支，那么它就会处理这个新状态，从而导致编译器不发警告信息。用NS_ENUM定义其他枚举类型时也要注意此问题。例如，在定义代表UI元素样式的枚举时，通常要确保switch语句能正确处理所有样式。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。<br>如果把传递给某个方法的选项表示为枚举类型，而多个选项有可同时使用，那么久将各个选项值定义为2的幂，以便通过按位或操作将其组合起来。<br>用NS_ENUM于NS_OPTIONS洪来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。<br>在处理枚举类型的switch语句中不要实现default分支。这样的话，加入新枚举之后，编译器就会提示开发者：switch语句并未处理所有枚举。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第5条：用枚举表示状态、选项、状态码/" data-id="cizsoq1g1000mke6qg0rla3xf" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-第4条：多用类型常量，少用-define预处理指令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/" class="article-date">
+  <time datetime="2017-03-02T08:44:02.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编写代码时经常要定义常量。例如，要写一个UI视图类，此视图显示出来之后就播放动画，然后消失。你可能想把播放动画的事件提取为常量。掌握了Objective-C与其C语言基础的人，也许会用这种方法来做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#define ANIMATION_DURATION 0.3</div></pre></td></tr></table></figure></p>
+<p>上述预处理指令会把源代码中的ANIMATION_DURATION字符串替换为0.3。这可能就是你想要的效果，不过这样定义出来的常量没有类型信息。“持续”（duration）这个词看上去应该与实践有关，但是代码中又未明确指出。因此，预处理过程会把碰到的所有ANIMATION_DURATION一律替换成0.3，这样的话。假设此指令声明在某个头文件中，那么所有引入了这个头文件的代码，其ANIMATION_DURATION都会被替换。</p>
+<p>要想解决此问题，应该设法利用编译器的某些特性才对。有个办法比用预处理器指令来定义常量更好。比方说，下面这行代码就定义了一个类型为NSTimeInterval的常量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static const NSTimeInterval kAnimationDuration = 0.3;</div></pre></td></tr></table></figure></p>
+<p>请注意，用此方法定义的常量包含类型信息，其好处是清楚地描述了常量的含义。由此可知该常量类型为NSTimerInterval，这有助于为其编写开发文档。如果要定义许多常量，那么这种方式能令稍后阅读代码的人更易理解其意图。</p>
+<p>还有注意常量名称。常用的命名法是：若常量局限于某“编译单元”（translation unit，也就是“实现文件”， implementation file）之内，则在前面加上字母k；若常量在类之外可见，则通常以类名为前缀。第19条详解了命名习惯（naming convention）。</p>
+<p>定义常量的位置很重要，我们总喜欢在头文件里声明预处理指令，这样做真的很糟糕，当常量名称有可能互相出图更是如此。例如，ANIMATION_DURATION这个常量名就不该在头文件中，因为所有引入了这份头文件的其他文件都会出现这个名字。其实就连用static const定义的那个常量也不应出现在头文件里。因为Objective-C没有“命名空间”（namespace）这一概念，所以那样做等于声明了一个名叫kAnimationDuration的全局变量。此名称应该加上前缀，以表明其所属的类，例如可改为EOCViewClassAnimationDuration。本书第19条中深入讲解了一套清晰的命名方案。</p>
+<p>若不打算公开某个常量，则应将其定义在使用该常量的实现文件里。比方说，要开发一个使用UIKit框架的IOS应用程序，其UIView子类中含有表示动画播放时间的常量，那么可以这样写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">// EOCAnimatedView.h</div><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@interface EOCAnimatedView : UIView</div><div class="line">- (void)animate;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCAnimatedView.m</div><div class="line">#import &quot;EOCAnimatedView.h&quot;</div><div class="line"></div><div class="line">static const NSTimeInterval kAnimationDuration = 0.3;</div><div class="line"></div><div class="line">@inplementation EOCAnimatedView</div><div class="line">- (void)animate&#123;</div><div class="line">	[UIViewanimateWithDuration:kAnimationDuration animation:^()&#123;</div><div class="line">		// Perform animations</div><div class="line">	&#125;];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>变量一定要同时用static与const来声明。如果试图修改由const修饰符所声明的变量，那么编译器就会报错。在本例中，我们正是希望这样：因为动画播放时为定值，所以不应修改。而static修饰符则意味着该变量仅在定义此变量的编译单元中可见。编译器每到一个编译单元，就会输出一份“目标文件”（object file）。在Objective-C的语境下，“编译单元一词通常指每个类的实现文件（以.m为后缀名）”。因此，在上述范例代码中声明的kAnimationDuratin变量，其作用域仅限于EOCAnimatedView.m所生成的目标文件中。假如声明此变量时不加static，则编译器会为它创建一个“外部符号”（external symbol）。此时若是另外一个编译单元也声明了同名变量，那么编译器就抛出一条错误消息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">duplicate symbol _kAnimationDuration in:</div><div class="line">	EOCAnimatedView.o</div><div class="line">	EOCOtherView.o</div></pre></td></tr></table></figure></p>
+<p>实际上，如果一个变量既声明为static，又声明为const，那么编译器根本不会创建符号，而是会像#define预处理指令一样，把所有遇到的变量都替换为常值。不过还是要记住：用这种方式定义的常量带有类型信息。</p>
+<p>有时候需要对外公开某个常量。比方说，你可能要在类代码中调用NSNotificationCenter以通知他人。用一个对象来派发通知，令其他欲接收通知的对象向该对象注册，这样就能实现此功能了。派发通知时，需要使用字符串来表示此项通知的名称，而这个名字就可以声明为一个外界可见的常值变量（const variable）。这样的话，注册者无须知道实际字符串值，只需以常值变量来注册自己想要接收的通知即可。</p>
+<p>此类常量需放在“全局符号表”（global symbol table）中，以便可以在定义该常量的编译单元之外使用。因此，其定义方式与上例演示的static const有所不同。应该这样来定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// In the header file</div><div class="line">extern NSString *const EOCStringConstant;</div><div class="line"></div><div class="line">// In the implementation file</div><div class="line">NSString *const EOCStringConstant = @&quot;Value&quot;;</div></pre></td></tr></table></figure></p>
+<p>这个常量在头文件中“声明”，且在实现文件中“定义”。注意const修饰符在常量类型中的位置。常量定义应从右至左解读，所以在本例中，EOCStringConstant就是“一个常量，而这个常量是指针，指向NSString对象”。这与需求相符：我们不希望有人改变此指针常量，使得其指向另一个NSString对象。</p>
+<p>编译器看到头文件中的extern关键字，就能明白如何在引入此头文件的代码中处理该常量了。这个关键字是告诉编译器，在全局符号表中将会有一个名叫EOCStringConstant的符号。也就是说，编译器无需查看其定义，即允许代码使用此向量。因为它知道，当链接成二进制文件之后，肯定能找到这个常量。</p>
+<p>此类常量必须要定义，而且只能定义一次。通常将其定义在与声明该常量的头文件相关的实现文件里。由实现文件生成目标文件时，编译器会在“数据段”（data section）为字符串分配存储空间。链接器会把此目标文件与其他目标文件相链接，以生成最终的二进制文件。凡是用到EOCStringConstant这个全局符号的地方，链接器都能将其解析。</p>
+<p>因为符号要放在全局符号表里，所以命名常量时需谨慎。例如，在某应用程序中有个处理登录操作的类，在登录完成后会发出通知。派发通知所用的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// EOCLoginManager.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">extern NSString *const EOCLoginManagerDidLoginNotification;</div><div class="line"></div><div class="line">@interface EOCLoginManager : NSObject</div><div class="line">- (void)login;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCLoginManager.m</div><div class="line">#import &quot;EOCLoginManager.h&quot;</div><div class="line"></div><div class="line">NSString *const EOCLoginManagerDidLoginNotification = @&quot;EOCLoginManagerDidLoginNotification&quot;;</div><div class="line"></div><div class="line">@implementation EOCLoginManager;</div><div class="line"> - (void)login&#123;</div><div class="line">	// Perform login asynchronously, then call &apos;p_didLogin&apos;.</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)p_didLogin&#123;</div><div class="line">	[[NSNotificationCenter defaultCenter] postNotificationName:EOCLoginManagerDidLoginNotification object:nil];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>注意常量的名字。为避免名称冲突，最好是用与之相关的类名做前缀。系统框架中一般都这样做。例如UIKit就按照这种方式来声明用作通知名称的全局常量。其中有类似UIApplicationDidEnterBackgroundNotification与UIApplicationWillEnterForegroundNotification这样的常量名。<br>其他类型的常量也是如此。假如要把前列中EOCAnimationView类里的动画播放时长对外公布，那么可以这样声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// EOCAnimatedView.h</div><div class="line">extern const NSTimeInterval EOCAnimatedViewAnimationDuration;</div><div class="line"></div><div class="line">// EOCAnimatedView.m</div><div class="line">const NSTimeInterval EOCAnimatedViewAnimationDuration = 0.3;</div></pre></td></tr></table></figure></p>
+<p>这样定义常量要优于使用#define预处理指令，因为编译器会确保常量值不变。一旦在EOCAnimatedView.m中定义好，即可随处使用。而采用预处理指令所定义的常量可能会无意中遭人修改，从而导致应用程序各个部分所使用的值互不相同。</p>
+<p>总之，勿使用预处理指令定义常量，而应该借助编译器来确保常量正确，比方说可以在实现文件中用static const来声明常量，也可以声明一些全局常量。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>不要用预处理指令定义常量。这样定义出来的常量不含类型信息，编译器只是会在编译前据此执行查找和替换操作。即使有人重新定义了常量值，编译器也不会产生警告信息，这将导致应用程序中的常量值不一致。<br>在实现文件中使用static const来定义“只在编译单元内可见的常量”（translation-unit-specific constant）。由于此类常量不在全局符号表中，所以无须为其名称加前缀。<br>在头文件中使用extern来声明全局常量，并在相关实现文件中定义其值。这种常量要出现在全局符号表中，所以其名称应加以区隔，通常用与之相关的类名做前缀。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第4条：多用类型常量，少用-define预处理指令/" data-id="cizsoq1gn000tke6q9dpcinx8" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-第3条：多用字面量语法，少用与之等价的方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/" class="article-date">
+  <time datetime="2017-03-02T06:00:16.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编写Objective-C程序时，总会用到某几个类，它们属于Foundation框架。虽然从技术上来说，不用Foundation框架也能写出Objective-C代码，但实际上却经常要用到此框架。这几个类是NSString、NSNumber、NSArray、NSDictionary。从类名上即可看出各自所表示的数据结构。</p>
+<p>Objective-C以语法繁杂而著称。事实上的确是这样。不过，从Objective-C 1.0起，有一种非常简单的方式能创建NSString对象。这就是“字符串字面量”（string literal），其语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *someString = @&quot;Effective Objective-C 2.0&quot;;</div></pre></td></tr></table></figure></p>
+<p>如果不用这种语法的花，就要以常见的alloc及init方法来分配并初始化NSString对象了。在版本较新的编译器中，也能用这种字面量语法来声明NSNumber、NSArray、NSDictionary类的实例。使用字面量语法（literal syntax）可以缩减源代码长度，使其更为易读。</p>
+<h2 id="字面数值"><a href="#字面数值" class="headerlink" title="字面数值"></a>字面数值</h2><p>有时需要把整数、浮点数、布尔值封入Objective-C对象中。这种情况下可以用NSNumber类，该类可以处理多种类型的数值。若是不用字面量，那么就需要按下述方式创建实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSNumber *someNumber = [NSNumber numberWithInt:1];</div></pre></td></tr></table></figure></p>
+<p>上面这行代码创建了一个数字，将其值设为整数1。然而使用字面量能令代码更为整洁：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSNumber *someNumber = @1;</div></pre></td></tr></table></figure></p>
+<p>大家可以看到，字面量语法更为精简。不过它还有很多好处。能够以NSNumber实例表示的所有数据类型都可使用该语法。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NSNumber *intNumber = @1;</div><div class="line">NSNumber *floatNumber = @2.5f;</div><div class="line">NSNumber *doubleNumber = @3.14159;</div><div class="line">NSNumber *boolNumber = @YES;</div><div class="line">NSNumber *charNumber = @&apos;a&apos;;</div></pre></td></tr></table></figure></p>
+<p>字面量语法也适用于下述表达式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int x = 5;</div><div class="line">float y = 6.23f;</div><div class="line">NSNumber *expressionNumber = @(x * y);</div></pre></td></tr></table></figure></p>
+<p>以字面量来表示数值十分有用。这样走可以令NSNumber对象变得整洁，因为声明中只包含数值，而没有多余的语法成分。</p>
+<h2 id="字面量数组"><a href="#字面量数组" class="headerlink" title="字面量数组"></a>字面量数组</h2><p>数组是常用的数据结构。如果不使用字面量语法，那么就要这样来创建数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *animals = [NSArray arrayWithObjects:@&quot;cat&quot;, @&quot;dog&quot;, @&quot;mouse&quot;, @&quot;badger&quot;, nil];</div></pre></td></tr></table></figure></p>
+<p>使用字面量语法来创建则是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *animal = @[@&quot;cat&quot;, @&quot;dog&quot;, @&quot;mouse&quot;, @&quot;badger&quot;, nil];</div></pre></td></tr></table></figure></p>
+<p>上面这种做法不仅简单，而且还利于操作数组。数组的常见操作就是取某个下标所对应的对象，这用字面量来做更为容易。如果不用字面量，那么通常会用“objectAtIndex:”方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *dog = [animals objectiveAtIndex:1];</div></pre></td></tr></table></figure></p>
+<p>若使用字面量，则是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *dog = animal[1];</div></pre></td></tr></table></figure></p>
+<p>这也叫做“取下标”操作（subscripting），与使用字面量语法的其他情况一样，这种方式也更为简洁、更易理解，而且与其他语言中依下标来访问数组元素时所用的语法类似。<br>不过用字面量语法创建数组时要注意，若数组元素对象中有nil，则会抛出异常，因为字面量语法实际上只是一种“语法糖”（syntactic sugar），其效果等于是先创建了一个数组，然后把方括号内的所有对象都加到这个数组中。抛出的异常会使这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">*** Terminating app due to uncaught exception</div><div class="line">&apos;NSInvalidArgumentException&apos;,reason:&apos;***</div><div class="line">-[__NSPlaceholderArray initWithObjects:count:]: attempt to insert nil object from objects[0]&apos;</div></pre></td></tr></table></figure></p>
+<p>在改用字面量语法来创建数组时就会遇到这个问题。下面这段代码分别以两种语法创建数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">id object1 = /* ... */;</div><div class="line">id object2 = /* ... */;</div><div class="line">id object3 = /* ... */;</div><div class="line"></div><div class="line">NSArray *arrayA = [NSArray array WithObjects:object1, object2, object3, nil];</div><div class="line">NSArray *arrayB = @[object1, object2, object3];</div></pre></td></tr></table></figure></p>
+<p>大家想想：如果object1与object3都指向了有效的Objective—C对象，而object2是nil，那么会出现什么情况呢？按字面量语法创建数组arrayB时会抛出异常。arrayA虽然能创建出来，但是其中却只含有object1一个对象。原因在于，”arrayWithObjects:“方法会一次处理各个参数，直到发现nil为止，由于object2是nil，所以该方法会提前结束。<br>这个微妙的差别表明，使用字面量语法更为安全。抛出异常令应用程序终止执行，这比创建好数组之后发现元素个数少了要好。向数组中插入nil通常说明程序有错，而通过异常可以更快地发现这个错误。</p>
+<h2 id="字面量字典"><a href="#字面量字典" class="headerlink" title="字面量字典"></a>字面量字典</h2><p>”字典“（Dictionary）是一种影射型数据结构，可想起中添加键值对。与数组一样，Objective-C代码也经常用到字典。其创建方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NSDictionary *personData = [NSDictionarydictionary WithObjectsAndKeys:</div><div class="line">	@&quot;Matt&quot;, @&quot;firstName&quot;,</div><div class="line">	@&quot;Galloway&quot;, @&quot;lastName&quot;,</div><div class="line">	@&quot;NSNumber numberWithInt:28&quot;, @&quot;age&quot;,</div><div class="line">];</div></pre></td></tr></table></figure></p>
+<p>这样写令人困惑，因为其顺序是&lt;对象&gt;，&lt;键&gt;，&lt;对象&gt;，&lt;键&gt;。这与通常理解的顺序相反，我们一般认为是把”键“映射到”对象“。因此，这种写法不容易读懂。如果改用字面量语法，就清晰多了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSDictionary *personData = @&#123;</div><div class="line">	@&quot;firstName&quot;:@&quot;Matt&quot;,</div><div class="line">	@&quot;lastName&quot;:@&quot;Galloway&quot;,</div><div class="line">	@&quot;age&quot;:@28&#125;;</div></pre></td></tr></table></figure></p>
+<p>上面这种写法更简明，而且键出现在对象之前，理解起来较顺畅。此范例代码还说明了使用字面量数值的好处。字典中的对象和键必须都是Objective-C对象，所以不能把整数直接放进去，而要将其封装在NSNumber实例中才行。使用字面量语法很容易就能做到这一点，只需给数字前加一个@字符即可。</p>
+<p>与数组一样，用字面量语法创建字典时也有个问题，那就是一旦有值为nil，便会抛出异常。不过基于同样的原因，这也是个好事。加入在创建字典时不小心用了空值对象，那么”dictionaryWithObjectsAndKeys:“方法就会在首个nil之前停下来，并抛出异常，这有助于查错。</p>
+<p>字典也可以像数组那样用字面量语法访问。按照特定键访问其值得传统做法是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *lastName = [personData objectForKey:@&quot;lastName&quot;];</div></pre></td></tr></table></figure></p>
+<p>与之等效的字面量语法则是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *lastName = personData[@&quot;lastName&quot;];</div></pre></td></tr></table></figure></p>
+<p>这样写也省去了冗赘的语法，令此行代码简单易读。</p>
+<h2 id="可变数组与字典"><a href="#可变数组与字典" class="headerlink" title="可变数组与字典"></a>可变数组与字典</h2><p>通过取下标操作，可以访问数组中某个下标或字典中某个键所对应的元素。如果数组与字典对象是可变的（mutable），那么也能通过下标修改其中的元素值。修改可变元素与字典内容的标准做法是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[mutableArray replaceObjectAtIndex:1 withObject:@&quot;dog&quot;];</div><div class="line">[mutableDictionary setObject:@&quot;Galloway&quot; forKey:@&quot;lastName&quot;];</div></pre></td></tr></table></figure></p>
+<p>若换用取下标操作来写，则是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mutableArray[1] = @&quot;dog&quot;;</div><div class="line">mutableDictionary[@&quot;lastName&quot;] = @&quot;Galloway&quot;;</div></pre></td></tr></table></figure></p>
+<h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2><p>字面量语法有个小小的限制，就是除了字符串以外，所创建出来的对象必须属于Foundation框架才行。如果自定义了这些类的子类，则无法用字面量语法创建其对象。要想创建自定义子类的实例，必须采用”非字面量语法“（nonliteral syntax）。然而，由于NSArray、NSDictionary、NSNumber都是业已定型的”子族“（class cluster，参见第9条），因此很少有人会从其中自定义子类，真要那样做也比较麻烦。而且一般来说，标准的实现已经很好了，无需再改动。创建字符串时可以使用自定义的子类，然而必须要修改编译器的选项才行。除非你明白这样做的后果，否则不鼓励使用此选项，用NSString就足够了。</p>
+<p>使用字面量语法创建出来的字符串、数组、字典对象都是不可变的（immutable）。若想要可变版本的对象，则需复制一份：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSMutableArray *mutable = [@[@1,  @2,  @3,  @4, @5]mutableCopy];</div></pre></td></tr></table></figure></p>
+<p>这么做会多调用一个方法，而且还要再创建一个对象，不过使用字面量语法所带来的好处还是多余上述缺点的。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>应该使用字面量语法来创建字符串、数值、数组、字典。与创建此类对象的常规方法相比，这么做更加简明扼要。<br>应该通过取下标操作来访问数组下标或字典中的键所对应的元素。<br>用字面量语法创建数组或字典时，若值中有nil，则会抛出异常。因此，务必确保值里不含nil。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/" data-id="cizsoq1g7000oke6q7m3a9n77" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-第2条：在类的头文件中尽量少引入其他都文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/" class="article-date">
+  <time datetime="2017-03-01T17:00:12.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>与C和C++一样，Objective-C也使用“头文件”（header file）与“实现文件”（implementation file）来区隔代码。用Objective-C语言编写“类”（class）的标准方式为：以类名做文件名，分别创建两个文件，头文件后缀用.h，实现文件后缀用.m。创建好一个类之后，其代码看上去如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString * firstName;</div><div class="line">@property (nonatomic, copy) NSString * lastName;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCPerson.m</div><div class="line">#import &quot;EOCPerson.h&quot;</div><div class="line"></div><div class="line">@implementation EOCPerson</div><div class="line">// Implementation of methods</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>用Objective-C语言编写任何类几乎都需要引入Foundation.h。如果不在该类本身引入这个文件的话，那么就要引入与其超类所属框架相对应的“基本头文件”（base header file）。例如，在创建IOS应用程序时，通常会继承UIViewController类。而这些子类的头文件需要引入UIKit.h。</p>
+<p>现在看来，EOCPerson类还好。其头文件引入了整个Foundation框架，不过这并没有问题。如果此类继承自Foundation框架中的某个类，那么EOCPerson类的使用者（consumer）可能会用到其基类中的许多内容。继承自UIViewController的那些类也是如此，其使用者可能会用到UIKit中的大部分内容。</p>
+<p>过段时间，你可能又创建了一个名为EOCEmployer的新类，然后可能觉得每个EOCPerson实例都应该有一个EOCEmployer。于是，直接为其添加一项属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString *firstName;</div><div class="line">@property (nonatomic, copy) NSString *lastName;</div><div class="line">@property (nonatomic, strong) EOCEmployer *employer;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>然而这么做有个问题，就是在编译引入了EOCPerson.h的文件时，EOCEmployer类并不可见。不便强迫开发者在引入EOCPerson.h时必须一并引入EOCEmployer.h，所以，常见办法是在EOCPerson.h中加入下面这行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &quot;EOCEmployer.h&quot;</div></pre></td></tr></table></figure></p>
+<p>这种办法可行，但是不够优雅。在编译一个使用了EOCPerson类的文件时，不需要知道EOCEmployer类的全部细节，只需要知道有一个类名叫EOCEmployer就好，所幸有个办法能把这一情况告诉编译器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@class EOCEmployer;</div></pre></td></tr></table></figure></p>
+<p>这叫做“向前声明”（forward declaring）该类。现在EOCPerson的头文件变成了这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@class EOCEmployer;</div><div class="line"></div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString *firstName;</div><div class="line">@property (nonatomic, copy) NSString *lastName;</div><div class="line">@property (nonatomic, strong) EOCEmployer *employer;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>EOCPerson类的实现文件则需要引入EOCEmployer类的头文件，因为若要使用后者，则必须知道其所有接口细节。于是，实现文件就是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.m</div><div class="line">#import &quot;EOCPerson.h&quot;</div><div class="line">#import &quot;EOCEmployer.h&quot;</div><div class="line"></div><div class="line">@implementation EOCPerson</div><div class="line">// Implementation of methods</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>将引入头文件的时机尽量延后，只在确有需要时才引入，这样就可以减少类的使用者所需引入的头文件数量。假设本例把EOCEmployer.h引入到EOCPerson.h，那么只要引入EOCPerson.h，就会一并引入EOCEmployer.h的所有内容。此过程若持续下去，则要引入许多根本用不到的内容，这当然会增加编译事件。</p>
+<p>向前声明也解决了两个类互相引用的问题。假设要为EOCEmployer类加入新增及删除雇员的方法，那么其头文件中会加入下述定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-(void)addEmployee:(EOCPerson *)person;</div><div class="line">-(void)removeEmployee:(EOCPerson *)person;</div></pre></td></tr></table></figure></p>
+<p>此时，若要编译EOCEmployer，则编译器必须知道EOCPerson这个类，而要编译EOCPerson，则又必须知道Employer。如果在各自头文件中引入对方的头文件，则会导致“循环引用”（chicken-and-egg situation）。当解析其中的一个头文件时，编译器会发现它引入了另一个头文件，而那个头文件又回过头来引用第一个头文件。使用#import而非#include指令虽然不会导致死循环，但却意味着这两个类里有一个无法被正确编译。如果不信的话，读者可以自己试试。</p>
+<p>但是有时候必须要在头文件中引入其他头文件。如果你写的类继承自某个超类，则必须引入定义那个超类的头文件。同理，如果要声明你写的类遵从某个协议（protocol），那么该协议必须有完整定义，切不能使用向前声明。向前声明只能告诉编译器有某个协议，而此时编译器却要知道该协议中定义的方法。<br>例如，要从图形类中继承一个矩形类，切令其遵循绘制协议：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &quot;EOCShape.h&quot;</div><div class="line">#import &quot;EOCDrawable.h&quot;</div><div class="line"></div><div class="line">@interface EOCRectangle : EOCShape&lt;EOCDrawable&gt;</div><div class="line">@property (nonatomic, assign) float width;</div><div class="line">@property (nonatomic, assign) float height;</div></pre></td></tr></table></figure></p>
+<p>第二条#import是难免的。鉴于此，最好是把协议单独放在一个头文件中。要是把EOCDrawable协议放在了某个大的头文件里，那么只要引入此协议，就必定会引入那个头文件中的全部内容，如此一来，就像上面说的那样，会产生相互依赖问题，而且还会增加编译时间。</p>
+<p>然而有些协议，例如“委托协议”（delegate protocol，参见第23条），就不用单独写一个头文件了。在那种情况下，协议只有与接收协议委托的类放在一起定义才有意义。此时最好能在实现文件中声明此类实现了该委托协议，并把这段实现代码放在“class-continuation分类”（class-continuation category，参见第27条）里。这样的话，只要在实现文件中引入包括委托协议的头文件即可，而不需将其放在公共头文件（public header file）里。</p>
+<p>每次在头文件中引入其他头文件之前，都要先问问自己这样做是否确有必要。如果可以用向前声明取代引入，那么就不要引入。若因为要实现属性、实例变量或者要遵循协议而必须引入头文件，则应尽量将其移至“class-continuation分类”中（参见第27条）。这样做不仅可以缩减编译事件，而且还能降低彼此依赖程度。若是依赖关系过于复杂，则会给维护带来麻烦，而且，如果只想把代码的某个部分开放为公共API的话，太复杂的以来关系也会出问题。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）。<br>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，尽量把“该类遵循某协议”的这条声明移到“class-continuation”分类中。如果不行的话，就把协议单独放在一个头文件中，然后将其引入。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/" data-id="cizsoq1gk000rke6qla9j5kog" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-第1条：熟悉Objective-C" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第1条：熟悉Objective-C/" class="article-date">
+  <time datetime="2017-03-01T16:03:55.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一章节<br>熟悉Objective-C</p>
+<p>Objective-C通过一套全新语法，在C语言基础上添加了面向对象特性。Objective-C的语法中频繁使用方括号，而且不吝于写出极长的方法名，这通常令许多人觉得此语言为冗长。其实这样写出来的代码十分易读，只是C++或Java程序员不太能适应。</p>
+<p>Objective-C语言学起来很快，但有很多微妙细节需要注意，而且还有许多容易为人所忽视的特性。另一方面，有些开发者并未完全理解或是滥用某些特性，导致写出来的代码难于维护且不易调试。本章讲解基础知识，后续各章谈论语言及其相关框架中的各个特定话题。</p>
+<h2 id="第一条：了解Objective-C语言的起源"><a href="#第一条：了解Objective-C语言的起源" class="headerlink" title="第一条：了解Objective-C语言的起源"></a>第一条：了解Objective-C语言的起源</h2><p>Objective-C与C++、Java等面向对象语言类似，不过很多方面有所差别。若是用过另一种面向对象语言，那么就能理解Objective-C所用的许多范式与模板了。然而语法上也许会显得陌生，因为该语言使用“消息结构”（messaging struct）而非“函数调用”（function calling）。Objective-C语言由Smalltalk演化而来，后者是消息型语言的鼻祖。消息与函数调用之间的区别看上去就像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Messaging (Objective-C)</div><div class="line">Object * obj = [Object new];</div><div class="line">[obj performWith:parameter1 and:parameter2];</div><div class="line"></div><div class="line">// Function calling (C++)</div><div class="line">Object * obj = new Object;</div><div class="line">obj-&gt;perform(parameter1, parameter2);</div></pre></td></tr></table></figure></p>
+<p>关键区别在于：使用消息结构的语言，其运行时所应执行的代码由运行环境来决定；而使用函数调用的语言，则由编译器决定。如果范例代码中调用的函数是多态的，那么在运行时就就要按照“虚函数表（virtual table）”来查出到底应该执行哪个函数实现。而采用消息结构的语言，不论是否多态，总是在运行时才会去查找所要执行的方法。实际上，编译器甚至不关心接收消息的对象是何种类型。接收消息的对象问题也要在运行时处理，其过程叫做“动态绑定（dynamic binding）”，第11条会详述其细节。</p>
+<p>Objective-C的重要工作都由“运行期组件”（runtime component）而非编译器来完成。使用Objective-C的面向对象特性所需的全部数据结构及函数都在运行期组件里面。举例来说，运行期组件中含有全部内存管理方法。运行期组件本质上就是一种与开发者所编代码相链接的“动态库”（dynamic library），其代码能把开发者编写的所有程序粘合起来。这样的话，只需更新运行期组件，即可提升应用程序性能。而那种许多工作都在“编译期”（compile time）完成的语言，若想获得类似的性能提升，则要重新编译应用程序代码。</p>
+<p>Objective-C是C的“超集”（superset），所以C语言中的所有功能在编写Objective-C代码时依然适用。因此，必须同时掌握C与Objective-C这两门语言的核心概念，方能写出高效的Objective-C代码来。其中尤为重要的是理解C语言的内存模型（memory model），这有助于理解Objective-C的内存模型及其“引用计数”（reference counting）机制的工作原理。若要理解内存模型，则需明白：Objective-C语言中的指针是用来指示对象的。想要声明一个变量，令其指代某个对象，可用如下语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString * someString = @&quot;The string&quot;;</div></pre></td></tr></table></figure></p>
+<p>这种语法基本上是照搬C语言的，它声明了一个名为someThing的变量，其类型是NSString*。也就是说，此变量为指向NSString的指针。所有Objective-C语言的对象都必须这样声明，因为对象所占内存总是分配在“堆控件”（heap space）中，而绝不会分配在“栈”（stack）上。不能再栈上分配Objective-C对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString stackString;</div><div class="line">// error: interface type cannot be statically allocated</div></pre></td></tr></table></figure></p>
+<p>someString变量指向分配在堆里的某块内存，其中含有一个NSString对象。也就是说，如果再创建一个变量，令其指向同一地址，那么并不拷贝该对象，只是这两个变量会同时指向此对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *someString = @&quot;The string&quot;;</div><div class="line">NSString *anotherString = someString;</div></pre></td></tr></table></figure></p>
+<p>只有一个NSString实例，然而又两个变量指向此实例。两个变量都是NSString*型，这说明当期那“栈帧”（stack frame）里面分配了两块内存，每块内存的带下都能容下一枚指针（在32位架构的计算机上是4字节，64位计算机上是8字节）。这两块内存里的值都一样，就是NSString实例的内存地址。</p>
+<p>图1-1 描述了此时的内存布局。存放在NSString实例中的数据含有代表字符串实际内容的字节。</p>
+<pre><code>图1-1 此内存布局图演示了一个分配在堆中的NSString实例，有两个分配在栈上的指针指向该实例
+</code></pre><p>分配在堆中的内存必须直接管理，而分配在栈上用于保存变量的内存则会在其栈帧弹出时自动清理。</p>
+<p>Objective-C将堆内存管理抽象出来了。不需要用malloc及free来分配或释放对象所占内存。Objective-C运行期环境把这部分工作抽象为一套内存管理架构，名叫“引用计数”（参见第29条）。</p>
+<p>在Objective-C代码中，有时会遇到定义里不含* 变量，他们可能会使用“栈控件”（stack space）。这些变量所保存的不是Objective-C对象。比如CoreGraphic框架中的CGRect就是个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CGRect frame;</div><div class="line">frame.origin.x = 0.0f;</div><div class="line">frame.origin.y = 10.0f;</div><div class="line">frame.size.width = 100.0f;</div><div class="line">frame.size.height = 150.0f;</div></pre></td></tr></table></figure></p>
+<p>CGRect是C结构体，其定义是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct CGRect&#123;</div><div class="line">	CGPoint origin;</div><div class="line">	CGSize size;</div><div class="line">&#125;;</div><div class="line">typedef struct CGRect CGRect;</div></pre></td></tr></table></figure></p>
+<p>整个系统框架都在使用这种结构体，因为如果改用Objective-C对象来做的花，性能会受影响。与创建结构体相比，创建对象还需要额外开销，例如分配及释放堆内存等。如果只需要保存int、float、double、char等“非对象类型”（nonobject type），那么通常使用CGRect这种结构体就可以了。</p>
+<p>在着手编写Objective-C代码之前，建议读者先看看C语言教程，以熟悉其语法。若是还没熟悉C语言就直接进入Objective-C的话，那么某些语法也许会令你困惑。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>Objective-C为C语言添加了面向对象特性，是其超集。Objective-C使用动态绑定的消息结构，也就是说，在运行时才会检查对象类型。接受一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定。<br>理解C语言的核心概念有助于写好Objective-C程序。尤其要掌握内存模型与指针。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第1条：熟悉Objective-C/" data-id="cizsoq1ff000cke6qq7wqakdr" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Cocoapod安装与简单使用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/01/Cocoapod安装与简单使用/" class="article-date">
@@ -98,11 +403,13 @@
 <h2 id="在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令"><a href="#在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令" class="headerlink" title="在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令"></a>在项目里安装组件（在项目的根目录下，也就是有Podfile文件的那个目录内），运行以下命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod install</div></pre></td></tr></table></figure>
 <h2 id="在我的终端上面显示"><a href="#在我的终端上面显示" class="headerlink" title="在我的终端上面显示"></a>在我的终端上面显示</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Analyzing dependencies</div><div class="line">Downloading dependencies</div><div class="line">Installing AFNetworking (3.1.0)</div><div class="line">Generating Pods project</div><div class="line">Integrating client project</div><div class="line">Sending stats</div></pre></td></tr></table></figure>
 <h2 id="打开工程"><a href="#打开工程" class="headerlink" title="打开工程"></a>打开工程</h2><p>注意，这个时候不要再打开.xcodeproj 工程，而是.xcworkspace，这个时候就可以看到所有的内容都在里面了。</p>
+<hr>
+<h2 id="iOS-删除已经配置的类库和移除CocoaPods"><a href="#iOS-删除已经配置的类库和移除CocoaPods" class="headerlink" title="iOS 删除已经配置的类库和移除CocoaPods"></a>iOS 删除已经配置的类库和移除CocoaPods</h2><p>请参照：<a href="http://www.jianshu.com/p/552f21a989ba" target="_blank" rel="external">http://www.jianshu.com/p/552f21a989ba</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/03/01/Cocoapod安装与简单使用/" data-id="cizqzznrn0000gw6qwjn779zj" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/03/01/Cocoapod安装与简单使用/" data-id="cizsoq1ed0001ke6qtynz1gkt" class="article-share-link">分享</a>
       
       
     </footer>
@@ -143,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/28/MAC下使用CLOC进行代码量统计/" data-id="cizqzznv8000mgw6ql10k5wui" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/28/MAC下使用CLOC进行代码量统计/" data-id="cizsoq1f80009ke6qttwe7k21" class="article-share-link">分享</a>
       
       
     </footer>
@@ -187,7 +494,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/28/Homebrew/" data-id="cizqzznuh0007gw6qd0dymqag" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/28/Homebrew/" data-id="cizsoq1f40007ke6qo1exkxox" class="article-share-link">分享</a>
       
       
     </footer>
@@ -239,7 +546,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/28/Block/" data-id="cizqzznu90003gw6q2k8lnpkt" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/28/Block/" data-id="cizsoq1e50000ke6q8d3g69i3" class="article-share-link">分享</a>
       
       
     </footer>
@@ -285,234 +592,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/28/GCD/" data-id="cizqzznud0004gw6ql2efcyr8" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-开发记录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/27/开发记录/" class="article-date">
-  <time datetime="2017-02-27T05:37:19.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/IOS/">IOS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/开发记录/">开发记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="修改1"><a href="#修改1" class="headerlink" title="修改1"></a>修改1</h3><p>2017-02-27 13:07:13.987 GooglyPuff[70647:1020285] App Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temporary exceptions can be configured via your app’s Info.plist file.</p>
-<p>说明：<br>从IOS9开始，强制使用了https协议，对于想要使用http协议，需要在info文件中添加如下字段：</p>
-<p>在面板上点击右键，显示“Show Raws Keys/Vlaues”，然后增加下面内容<br>NSAppTransportSecurity<br>NSAllowsArbitraryLoads 设置为YES。</p>
-<p>也可以在未选择“Show Raws Keys/Values”时，增加“App Transport Security Settings”，再增加子项“Allow Arbitrary Loads”，选择YES。</p>
-<h3 id="修改2"><a href="#修改2" class="headerlink" title="修改2"></a>修改2</h3><p>2017-02-27 13:07:22.203304 GooglyPuff[70647:1020281] [access] This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.</p>
-<p>说明：<br>这是禁止直接使用相册，需要在info.plist内增加NSPhotoLibraryUsageDescription，并添加说明。具体参照【修改1】<br>除了上面这两个，下面这些也已经增加进来：<br>Privacy - Microphone Usage Description //麦克风权限<br>Privacy - Contacts Usage Description   //通讯录权限<br>Privacy - Camera Usage Description     //摄像头权限<br>Privacy - NSSiriUsageDescription       //Siri的权限<br>Privacy - Bluetooth Peripheral Usage Description //蓝牙<br>Privacy - Reminders Usage Description  //提醒事项<br>Privacy - Motion Usage Description     //运动与健康<br>Privacy - Media Libaray Usage Description //媒体资源库<br>Privacy - Calendars Usage Description  //日历</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/27/开发记录/" data-id="cizqzznuf0006gw6qmlklnr96" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-阿里巴巴" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/阿里巴巴/" class="article-date">
-  <time datetime="2017-02-25T14:54:08.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/吐槽/">吐槽</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/阿里巴巴/">阿里巴巴招聘</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>职位描述：<br>1、架构设计：负责阿里音乐在iOS端的技术架构和研发，保证架构的灵活性和先进性。<br>2、体验改进：负责iOS端用户体验的改进，全面改善性能、稳定性、交互、细节等，打造独一无二的阿里星球APP。<br>3、效率提升：在做功能的同时，沉淀平台化技术设施，并推广给其他人使用，提高整体研发效率，降低重复和类似工作。<br>4、技术创新：保持对新技术的敏锐度，通过技术研究和创新，给业务提供新的机会和思路，拓展业务边界。<br>5、项目管理：负责重点项目PM，主导项目进展，协调多方跨BU力量，共同达到目标，拿到结果。</p>
-<p>1、五年以上开发经验，三年以上iOS开发经验，参加过中型商业级APP开发。<br>2、精通iOS应用开发，熟悉常用开源库，精通Objective-C编程语言，熟悉C/C++语言及Native编程，有良好的编程习惯；<br>3、精通UI界面开发，熟悉MVC，MVVM等设计，有组件化思维，了解RN等动态UI原理，在实现UI功能的同时，能考虑未来变化的灵活性。<br>4、熟练掌握VM/Runtime原理，了解操作系统原理及CPU指令，并能够利用原理提出对应用层的优化方案，对底层棘手问题，能够迅速有效的排查。<br>5、了解大型应用多模块合作开发机制，熟悉Git和GitFlow分支管理，了解Bundle化机制，以及Hotpatch机制。<br>6、有性能和稳定性优化经验，熟悉常见的性能稳性定策略，对用户体验有极致追求，有良好的自测习惯。<br>7、有多线程、网络、反编译、安全等编程经验，熟练TCP/HTTP/SPDY/DNS/CDN等网络知识，了解网络优化策略和安全防范机制。<br>8、善于总结，有自己的技术理念，乐于分享，有较高的钻究学习热情，能主动建立自己的技术影响力。<br>9、有良好的表达能力，能抓住问题重点，善于团队合作，有高度责任心，有较强的推动力，有舍我其谁的冲劲</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/阿里巴巴/" data-id="cizqzznuw000cgw6qfornje1y" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-IOS开发相关网站" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/IOS开发相关网站/" class="article-date">
-  <time datetime="2017-02-25T13:03:24.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/IOS/">IOS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/IOS开发相关网站/">IOS开发相关网站</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>IOS性能优化：<a href="http://ios.jobbole.com/81719/" target="_blank" rel="external">http://ios.jobbole.com/81719/</a><br>Instruments进行iOS性能测试:<a href="http://blog.csdn.net/maryshine/article/details/52187161" target="_blank" rel="external">http://blog.csdn.net/maryshine/article/details/52187161</a></p>
-<p>LearningIOS<a href="https://github.com/zhouhuanqiang/LearningIOS" target="_blank" rel="external">https://github.com/zhouhuanqiang/LearningIOS</a></p>
-<p>IOS多线程<a href="http://www.cnblogs.com/kenshincui/p/3983982.html" target="_blank" rel="external">http://www.cnblogs.com/kenshincui/p/3983982.html</a></p>
-<p>IOS界面开发<a href="http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html" target="_blank" rel="external">http://www.cocoachina.com/bbs/read.php?tid-131516-page-1.html</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/IOS开发相关网站/" data-id="cizqzznum0008gw6q4874ydow" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-荀子劝学" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/荀子劝学/" class="article-date">
-  <time datetime="2017-02-25T12:39:35.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/鉴古/">鉴古</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/荀子劝学/">荀子劝学</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>君子曰： 学不可以已。</p>
-<p>青， 取之于蓝， 而青于蓝； 冰， 水为之， 而寒于水。 木直中绳， 輮以为轮， 其曲中规。 虽有槁暴， 不复挺者， 輮使之然也。 故木受绳则直， 金就砺则利， 君子博学而日参省乎己， 则知明而行无过矣。</p>
-<p>故不登高山， 不知天之高也； 不临深溪， 不知地之厚也； 不闻先王之遗言， 不知学问之大也。 干、 越、 夷、 貉之子， 生而同声， 长而异俗， 教使之然也。 诗曰： “嗟尔君子， 无恒安息。 靖共尔位， 好是正直。 神之听之， 介尔景福。” 神莫大于化道， 福莫长于无祸。</p>
-<p>吾尝终日而思矣， 不如须臾之所学也； 吾尝跂而望矣， 不如登高之博见也。 登高而招， 臂非加长也， 而见者远； 顺风而呼， 声非加疾也， 而闻者彰。 假舆马者， 非利足也， 而致千里； 假舟楫者， 非能水也， 而绝江河。 君子性非异也， 善假于物也。</p>
-<p>南方有鸟焉， 名曰蒙鸠， 以羽为巢， 而编之以发， 系之苇苕， 风至苕折， 卵破子死。 巢非不完也， 所系者然也。 西方有木焉， 名曰射干， 茎长四寸， 生于高山之上， 而临百仞之渊， 木茎非能长也， 所立者然也。 蓬生麻中， 不扶而直； 白沙在涅， 与之俱黑。 兰槐之根是为芷， 其渐之滫， 君子不近， 庶人不服。 其质非不美也， 所渐者然也。 故君子居必择乡， 游必就士， 所以防邪辟而近中正也。</p>
-<p>物类之起， 必有所始。 荣辱之来， 必象其德。 肉腐出虫， 鱼枯生蠹。 怠慢忘身， 祸灾乃作。 强自取柱， 柔自取束。 邪秽在身， 怨之所构。 施薪若一， 火就燥也， 平地若一， 水就湿也。 草木畴生， 禽兽群焉， 物各从其类也。 是故质的张， 而弓矢至焉； 林木茂， 而斧斤至焉； 树成荫， 而众鸟息焉。 醯酸， 而蚋聚焉。 故言有招祸也， 行有招辱也， 君子慎其所立乎！</p>
-<p>积土成山， 风雨兴焉； 积水成渊， 蛟龙生焉； 积善成德， 而神明自得， 圣心备焉。 故不积跬步， 无以至千里； 不积小流， 无以成江海。 骐骥一跃， 不能十步； 驽马十驾， 功在不舍。 锲而舍之， 朽木不折； 锲而不舍， 金石可镂。 蚓无爪牙之利， 筋骨之强， 上食埃土， 下饮黄泉， 用心一也。 蟹六跪而二螯， 非蛇鳝之穴无可寄托者， 用心躁也。</p>
-<p>是故无冥冥之志者， 无昭昭之明； 无惛惛之事者， 无赫赫之功。 行衢道者不至， 事两君者不容。 目不能两视而明， 耳不能两听而聪。 螣蛇无足而飞， 鼫鼠五技而穷。 《诗》曰： “尸鸠在桑， 其子七兮。 淑人君子， 其仪一兮。 其仪一兮， 心如结兮！” 故君子结于一也。</p>
-<p>昔者瓠巴鼓瑟， 而流鱼出听； 伯牙鼓琴， 而六马仰秣。 故声无小而不闻， 行无隐而不形 。玉在山而草润， 渊生珠而崖不枯。 为善不积邪？ 安有不闻者乎？</p>
-<p>学恶乎始？ 恶乎终？ 曰： 其数则始乎诵经， 终乎读礼； 其义则始乎为士， 终乎为圣人， 真积力久则入， 学至乎没而后止也。 故学数有终， 若其义则不可须臾舍也。 为之， 人也； 舍 之， 禽兽也。 故书者， 政事之纪也； 诗者， 中声之所止也； 礼者， 法之大分， 类之纲纪也。 故学至乎礼而止矣。 夫是之谓道德之极。 礼之敬文也， 乐之中和也， 诗书之博也， 春秋之微 也， 在天地之间者毕矣。 君子之学也， 入乎耳， 着乎心， 布乎四体， 形乎动静。 端而言， 蝡而动， 一可以为法则。 小人之学也， 入乎耳， 出乎口； 口耳之间， 则四寸耳， 曷足以美七尺之躯哉！ 古之学者为己， 今之学者为人。 君子之学也， 以美其身； 小人之学也， 以为禽犊。 故不问而告谓之傲， 问一而告二谓之囋。 傲、 非也， 囋、 非也； 君子如向矣。<br>学莫便乎近其人。 礼乐法而不说， 诗书故而不切， 春秋约而不速。 方其人之习君子之说， 则尊以遍矣， 周于世矣。 故曰： 学莫便乎近其人。</p>
-<p>学之经莫速乎好其人， 隆礼次之。 上不能好其人， 下不能隆礼， 安特将学杂识志， 顺诗书而已耳。 则末世穷年， 不免为陋儒而已。 将原先王， 本仁义， 则礼正其经纬蹊径也。 若挈裘领， 诎五指而顿之， 顺者不可胜数也。 不道礼宪， 以诗书为之， 譬之犹以指测河也， 以戈舂黍也， 以锥餐壶也， 不可以得之矣。 故隆礼， 虽未明， 法士也； 不隆礼， 虽察辩， 散儒也。</p>
-<p>问楛者， 勿告也； 告楛者， 勿问也； 说楛者， 勿听也。 有争气者， 勿与辩也。 故必由其道至， 然后接之； 非其道则避之。 故礼恭， 而后可与言道之方； 辞顺， 而后可与言道之理； 色从而后可与言道之致。 故未可与言而言， 谓之傲； 可与言而不言， 谓之隐； 不观气色而言， 谓瞽。 故君子不傲、 不隐、 不瞽， 谨顺其身。 诗曰： “匪交匪舒， 天子所予。” 此之谓也。</p>
-<p>百发失一， 不足谓善射； 千里蹞步不至， 不足谓善御； 伦类不通， 仁义不一， 不足谓善学。 学也者， 固学一之也。 一出焉， 一入焉， 涂巷之人也； 其善者少， 不善者多， 桀纣盗跖也； 全之尽之， 然后学者也。</p>
-<p>君子知夫不全不粹之不足以为美也， 故诵数以贯之， 思索以通之， 为其人以处之， 除其害者以持养之。 使目非是无欲见也， 使耳非是无欲闻也， 使口非是无欲言也， 使心非是无欲虑也。 及至其致好之也， 目好之五色， 耳好之五声， 口好之五味， 心利之有天下。 是故权利不能倾也， 群众不能移也， 天下不能荡也。 生乎由是， 死乎由是， 夫是之谓德操。 德操然后能定， 能定然后能应。 能定能应， 夫是之谓成人。 天见其明， 地见其光， 君子贵其全也。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/荀子劝学/" data-id="cizqzznv6000kgw6qlqdyeooa" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-增光贤文-上" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/25/增光贤文-上/" class="article-date">
-  <time datetime="2017-02-25T12:17:35.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/鉴古/">鉴古</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/25/增光贤文-上/">增光贤文-上</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昔时贤文，诲汝谆谆。集韵增广，多见多闻。<br>观今宜鉴古，无古不成今。<br>知己知彼，将心比心。<br>酒逢知己饮，诗向会人吟。相识满天下，知心能几人？<br>相逢好似初相识，到老终无怨恨心。<br>近水知鱼性，近山识鸟音。<br>易涨易退山溪水，易反易覆小人心。<br>运去金成铁，时来铁似金。<br>读书须用意，一字值千金。<br>逢人且说三分话，未可全抛一片心。<br>有意栽花花不发，无心插柳柳成荫。<br>画虎画皮难画骨，知人知面不知心。<br>钱财如粪土，仁义值千金。<br>流水下滩非有意，白云出岫本无心。<br>当时若不登高望，谁信东流海洋深？<br>路遥知马力，日久见人心。<br>两人一般心，无钱堪买金；一人一般心，有钱难买针。<br>相见易得好，久处难为人。<br>马行无力皆因瘦，人不风流只为贫。<br>饶人不是痴汉，痴汉不会饶人。<br>是亲不是亲，非亲却是亲。<br>美不美，乡中水；亲不亲，故乡人。<br>莺花犹怕春光老，岂可教人枉度春？<br>相逢不饮空归去，洞口桃花也笑人。<br>红粉佳人休使老，风流浪子莫教贫。<br>在家不会迎宾客，出门方知少主人。<br>黄芩无假，阿魏无真。<br>客来主不顾，自是无良宾。<br>良宾主不顾，应恐是痴人。<br>贫居闹市无人问，富在深山有远亲。<br>谁人背后无人说，哪个人前不说人？<br>有钱道真语，无钱语不真。<br>不信但看筵中酒，杯杯先劝有钱人。<br>闹里有钱，静处安身。<br>来如风雨，去似微尘。<br>长江后浪推前浪，世上新人换旧人。<br>近水楼台先得月，向阳花木早逢春。<br>古人不见今时月，今月曾经照古人。<br>先到为君，后到为臣。<br>莫道君行早，更有早行人。<br>莫信直中直，须防仁不仁。<br>山中有直树，世上无直人。<br>自恨枝无叶，莫怨太阳偏。<br>大家都是命，半点不由人。<br>一年之计在于春，一日之计在于辰。<br>一家之计在于和，一生之计在于勤。<br>责人之心责己，恕己之心恕人。<br>守口如瓶，防意如城。<br>宁可人负我，切莫我负人。<br>再三须慎意，第一莫欺心。<br>虎生犹可近，人熟不堪亲。<br>来说是非者，便是是非人。<br>远水难救近火，远亲不如近邻。<br>有茶有酒多兄弟，急难何曾见一人？<br>人情似纸张张薄，世事如棋局局新。<br>山中也有千年树，世上难逢百岁人。<br>力微休负重，言轻莫劝人。<br>无钱休入众，遭难莫寻亲。<br>平生不做皱眉事，世上应无切齿人。<br>士乃国之宝，儒为席上珍。<br>若要断酒法，醒眼看醉人。<br>求人须求英雄汉，济人须济急时无。<br>渴时一滴如甘露，醉后添杯不如无。<br>久住令人贱，频来亲也疏。<br>酒中不语真君子，财上分明大丈夫。<br>贫贱之交不可忘，糟糠之妻不下堂。<br>出家如初，成佛有余。<br>积金千两，不如明解经书。<br>养子不教如养驴，养女不教如养猪。<br>有田不耕仓廪虚，有书不读子孙愚。<br>仓廪虚兮岁月乏，子孙愚兮礼仪疏。<br>同君一席话，胜读十年书。<br>人不通今古，马牛如襟裾。<br>茫茫四海人无数，哪个男儿是丈夫？<br>白酒酿成缘好客，黄金散尽为诗书。<br>救人一命，胜造七级浮屠。<br>城门失火，殃及池鱼。<br>庭前生瑞草，好事不如无。<br>欲求生富贵，须下死工夫。<br>百年成之不足，一旦坏之有余。<br>人心似铁，官法如炉。<br>善化不足，恶化有余。<br>水至清则无鱼，人至察则无徒。<br>知者减半，愚者全无。<br>在家由父，出嫁从夫。<br>痴人畏妇，贤女敬夫。<br>是非终日有，不听自然无。<br>竹篱茅舍风光好，道院僧房终不如。<br>宁可正而不足，不可邪而有余。<br>宁可信其有，不可信其无。<br>命里有时终须有，命里无时莫强求。<br>道院迎仙客，书堂隐相儒。<br>庭栽栖凤竹，池养化龙鱼。<br>结交须胜己，似我不如无。<br>但看三五日，相见不如初。<br>人情似水分高下，世事如云任卷舒。<br>会说说都是，不会说无理。<br>磨刀恨不利，刀利伤人指。<br>求财恨不多，财多害自己。<br>知足常足，终身不辱；<br>知止常止，终身不耻。<br>有福伤财，无福伤己。<br>失之毫厘，谬以千里。<br>若登高必自卑，若涉远必自迩。<br>三思而行，再思可矣。<br>使口不如亲为，求人不如求己。<br>小时是兄弟，长大各乡里。<br>嫉财莫嫉食，怨生莫怨死。<br>人见白头嗔，我见白头喜。<br>多少少年郎，不到白头死。<br>墙有缝，壁有耳。<br>好事不出门，坏事传千里。<br>若要人不知，除非己莫为。<br>为人不做亏心事，半夜敲门心不惊。<br>贼是小人，智过君子。<br>君子固穷，小人穷斯滥矣。<br>贫穷自在，富贵多忧。<br>不以我为德，反以我为仇。<br>宁向直中取，不可曲中求。<br>人无远虑，必有近忧。<br>知我者谓我心忧，不知我者谓我何求？<br>晴天不肯去，直待雨淋头。<br>成事莫说，覆水难收。<br>是非只为多开口，烦恼皆因强出头。<br>忍得一时之气，免得百日之忧。<br>近来学得乌龟法，得缩头时且缩头。<br>惧法朝朝乐，欺心日日忧。<br>人生一世，草长一秋。<br>月过十五光明少，人到中年万事休。<br>儿孙自有儿孙福，莫为儿孙做马牛。<br>为人莫做千年计，三十河东四十西。<br>人生不满百，常怀千岁忧。<br>今朝有酒今朝醉，明日愁来明日忧。<br>路逢险处须回避，事到临头不自由。<br>人贫不语，水平不流。<br>一家养女百家求，一马不行百马忧。<br>有花方酌酒，无月不登楼。<br>三杯通大道，一醉解千愁。<br>深山毕竟藏猛虎，大海终须纳细流。<br>惜花须检点，爱月不梳头。<br>大抵选她肌骨好，不搽红粉也风流。<br>受恩深处宜先退，得意浓时便可休。<br>莫待是非来入耳，从前恩爱反为仇。<br>留得五湖明月在，不愁无处下金钩。<br>休别有鱼处，莫恋浅滩头。<br>去时终须去，再三留不住。<br>忍一句，息一怒，饶一着，退一步。<br>三十不豪，四十不富，五十将衰寻子助。<br>生不认魂，死不认尸。<br>一寸光阴一寸金，寸金难买寸光阴。<br>黑发不知勤学早，转眼便是白头翁。<br>父母恩深终有别，夫妻义重也分离。<br>人生似鸟同林宿，大难来时各自飞。<br>人善被人欺，马善被人骑。<br>人无横财不富，马无夜草不肥。<br>人恶人怕天不怕，人善人欺天不欺。<br>善恶到头终有报，只盼来早与来迟。<br>黄河尚有澄清日，岂能人无得运时？<br>得宠思辱，居安思危。<br>念念有如临敌日，心心常似过桥时。<br>英雄行险道，富贵似花枝。<br>人情莫道春光好，只怕秋来有冷时。<br>送君千里，终有一别。<br>但将冷眼观螃蟹，看你横行到几时。<br>见事莫说，问事不知。<br>闲事莫管，无事早归。<br>假缎染就真红色，也被旁人说是非。<br>善事可做，恶事莫为。<br>许人一物，千金不移。<br>龙生龙子，虎生虎儿。<br>龙游浅水遭虾戏，虎落平阳被犬欺。<br>一举首登龙虎榜，十年身到凤凰池。<br>十年寒窗无人问，一举成名天下知。<br>酒债寻常处处有，人生七十古来稀！<br>养儿防老，积谷防饥。<br>鸡豚狗彘之畜，无失其时，数口之家，可以无饥矣。<br>当家才知盐米贵，养子方知父母恩。<br>常将有日思无日，莫把无时当有时。<br>树欲静而风不止，子欲养而亲不待。<br>时来风送滕王阁，运去雷轰荐福碑。<br>入门休问荣枯事，且看容颜便得知。<br>官清司吏瘦，神灵庙祝肥。<br>息却雷霆之怒，罢却虎豹之威。<br>饶人算之本，输人算之机。<br>好言难得，恶语易施。<br>一言既出，驷马难追。<br>道吾好者是吾贼，道吾恶者是吾师。<br>路逢侠客须呈剑，不是才人莫献诗。<br>三人同行，必有我师。择其善者而从之，其不善者而改之。<br>欲昌和顺须为善，要振家声在读书。<br>少壮不努力，老大徒伤悲。<br>人有善愿，天必佑之。<br>莫饮卯时酒，昏昏醉到酉。<br>莫骂酉时妻，一夜受孤凄。<br>种麻得麻，种豆得豆。<br>天眼恢恢，疏而不漏。<br>做官莫向前，作客莫在后。<br>宁添一斗，莫添一口。<br>螳螂捕蝉，岂知黄雀在后？<br>不求金玉重重贵，但愿儿孙个个贤。<br>一日夫妻，百世姻缘。<br>百世修来同船渡，千世修来共枕眠。<br>杀人一万，自损三千。<br>伤人一语，利如刀割。<br>枯木逢春犹再发，人无两度再少年。<br>未晚先投宿，鸡鸣早看天。<br>将相顶头堪走马，公侯肚内好撑船。<br>富人思来年，穷人想眼前。<br>世上若要人情好，赊去物品莫取钱。<br>生死有命，富贵在天。<br>击石原有火，不击乃无烟。<br>人学始知道，不学亦徒然。<br>莫笑他人老，终须还到老。<br>和得邻里好，犹如拾片宝。<br>但能守本分，终身无烦恼。<br>大家做事寻常，小家做事慌张。<br>大家礼义教子弟，小家凶恶训儿郎。<br>君子爱财，取之有道。<br>贞妇爱色，纳之以礼。<br>善有善报，恶有恶报。<br>不是不报，时候未到。<br>万恶淫为首，百善孝当先。<br>人而无信，不知其可也。<br>一人道虚，千人传实。<br>凡事要好，须问三老。<br>若争小利，便失大道。<br>家中不和邻里欺，邻里不和说是非。<br>年年防饥，夜夜防盗。<br>学者是好，不学不好。<br>学者如禾如稻，不学如草如蒿。<br>遇饮酒时须防醉，得高歌处且高歌。<br>因风吹火，用力不多。<br>不因渔夫引，怎能见波涛？<br>无求到处人情好，不饮任他酒价高。<br>知事少时烦恼少，识人多处是非多。<br>进山不怕伤人虎，只怕人情两面刀。<br>强中更有强中手，恶人须用恶人磨。<br>会使不在家富豪，风流不用衣着多。<br>光阴似箭，日月如梭。<br>天时不如地利，地利不如人和。<br>黄金未为贵，安乐值钱多。<br>为善最乐，作恶难逃。<br>羊有跪乳之恩，鸦有反哺之情。<br>孝顺还生孝顺子，忤逆还生忤逆儿。<br>不信但看檐前水，点点滴滴旧池窝。<br>隐恶扬善，执其两端。<br>妻贤夫祸少，子孝父心宽。<br>已覆之水，收之实难。<br>人生知足时常足，人老偷闲且是闲。<br>处处绿杨堪系马，家家有路通长安。<br>既坠釜甑，反顾无益。<br>见者易，学者难。莫将容易得，便作等闲看。<br>厌静还思喧，嫌喧又忆山。<br>自从心定后，无处不安然。<br>用心计较般般错，退后思量事事宽。<br>道路各别，养家一般。<br>由俭入奢易，从奢入俭难。<br>知音说与知音听，不是知音莫与谈。<br>点石化为金，人心犹未足。<br>信了赌，卖了屋。<br>他人观花，不涉你目。<br>他人碌碌，不涉你足。<br>谁人不爱子孙贤，谁人不爱千钟粟。<br>奈五行，不是这般题目。<br>莫把真心空计较，儿孙自有儿孙福。<br>书到用时方恨少，事非经过不知难。<br>天下无不是的父母，世上最难得者兄弟。<br>与人不和，劝人养鹅；与人不睦，劝人架屋。<br>但行好事，莫问前程。不交僧道，便是好人。<br>河狭水激，人急计生。<br>明知山有虎，莫向虎山行。<br>路不铲不平，事不为不成。<br>无钱方断酒，临老始读经。<br>点塔七层，不如暗处一灯。<br>堂上二老是活佛，何用灵山朝世尊。<br>万事劝人休瞒昧，举头三尺有神明。<br>但存方寸土，留与子孙耕。<br>灭却心头火，剔起佛前灯。<br>惺惺多不足，蒙蒙作公卿。<br>众星朗朗，不如孤月独明。<br>兄弟相害，不如友生。<br>合理可作，小利不争。<br>牡丹花好空入目，枣花虽小结实多。<br>欺老莫欺小，欺人心不明。<br>勤奋耕锄收地利，他时饱暖谢苍天。<br>得忍且忍，得耐且耐，不忍不耐，小事成灾。<br>相论逞英豪，家计渐渐退。<br>贤妇令夫贵，恶妇令夫败。<br>一人有庆，兆民咸赖。<br>人老心未老，人穷志莫穷。<br>人无千日好，花无百日红。<br>黄蜂一口针，橘子两边分。<br>世间痛恨事，最毒淫妇心。<br>杀人可恕，情理不容。<br>乍富不知新受用，乍贫难改旧家风。<br>座上客常满，杯中酒不空。<br>屋漏更遭连夜雨，行船又遇打头风。<br>笋因落箨方成竹，鱼为奔波始化龙。<br>记得少年骑竹马，转眼又是白头翁。<br>礼义生于富足，盗贼出于赌博。<br>天上众星皆拱北，世间无水不朝东。<br>士为知己者死，女为悦己者容。<br>色即是空，空即是色。<br>君子安贫，达人知命。<br>良药苦口利于病，忠言逆耳利于行。<br>顺天者昌，逆天者亡。<br>有缘千里来相会，无缘对面不相逢。<br>有福者昌，无福者亡。<br>人为财死，鸟为食亡。<br>夫妻相和好，琴瑟与笙簧。<br>红粉易妆娇态女，无钱难作好儿郎。<br>有子之人贫不久，无儿无女富不长。<br>善必寿老，恶必早亡。<br>爽口食多偏作病，快心事过恐遭殃。<br>富贵定要依本分，贫穷不必再思量。<br>画水无风空作浪，绣花虽好不闻香。<br>贪他一斗米，失却半年粮。<br>争他一脚豚，反失一肘羊。<br>龙归晚洞云犹湿，麝过春山草木香。<br>平生只会说人短，何不回头把己量？<br>见善如不及，见恶如探汤。<br>人穷志短，马瘦毛长。<br>自家心里急，他人未知忙。<br>贫无达士将金赠，病有高人说药方。<br>触来莫与竞，事过心清凉。<br>秋来满山多秀色，春来无处不花香。<br>凡人不可貌相，海水不可斗量。<br>清清之水为土所防，济济之士为酒所伤。<br>蒿草之下或有兰香，茅茨之屋或有侯王。<br>无限朱门生饿殍，几多白屋出公卿。<br>酒里乾坤大，壶中日月长。<br>拂石坐来春衫冷，踏花归去马蹄香。<br>万事前身定，浮生空自忙。<br>叫月子规喉舌冷，宿花蝴蝶梦魂香。<br>一言不中，千言不用。<br>一人传虚，百人传实。<br>万金良药，不如无疾。<br>千里送鹅毛，礼轻情义重。<br>世事如明镜，前程暗似漆。<br>君子怀刑，小人怀惠。<br>架上碗儿轮流转，媳妇自有做婆时。<br>人生一世，如驹过隙。<br>良田万顷，日食一升。<br>大厦千间，夜眠八尺。<br>千经万典，孝义为先。<br>天上人间，方便第一。<br>一字入公门，九牛拔不出。<br>八字衙门向南开，有理无钱莫进来。<br>欲求天下事，须用世间财。<br>富从升合起，贫因不算来。<br>近河不得枉使水，近山不得枉烧柴。<br>家无读书子，官从何处来？<br>慈不掌兵，义不掌财。<br>一夫当关，万夫莫开。<br>万事不由人计较，一生都是命安排。<br>白云本是无心物，却被清风引出来。<br>慢行急行，逆取顺取。<br>命中只有如许财，丝毫不可有闪失。<br>人间私语，天闻若雷。<br>暗室亏心，神目如电。<br>一毫之恶，劝人莫作。一毫之善，与人方便。<br>亏人是祸，饶人是福，天眼恢恢，报应甚速。<br>圣贤言语，神钦鬼服。<br>人各有心，心各有见。<br>口说不如身逢，耳闻不如目见。<br>见人富贵生欢喜，莫把心头似火烧。<br>养兵千日，用在一时。<br>国清才子贵，家富小儿娇。<br>利刀割体疮犹使，恶语伤人恨不消。<br>公道世间唯白发，贵人头上不曾饶。<br>有才堪出众，无衣懒出门。<br>为官须作相，及第必争先。<br>苗从地发，树由枝分。<br>宅里燃火，烟气成云。<br>以直报怨，知恩报恩。<br>红颜今日虽欺我，白发他时不放君。<br>借问酒家何处有，牧童遥指杏花村。<br>父子和而家不退，兄弟和而家不分。<br>一片云间不相识，三千里外却逢君。<br>官有公法，民有私约。<br>平时不烧香，临时抱佛脚。<br>幸生太平无事日，恐防年老不多时。<br>国乱思良将，家贫思良妻。<br>池塘积水须防旱，田地深耕足养家。<br>根深不怕风摇动，树正何愁月影斜。<br>争得猫儿，失却牛脚。<br>愚者千虑，必有一得，智者千虑，必有一失。<br>始吾于人也，听其言而信其行。<br>今吾于人也，听其言而观其行。<br>哪个梳头无乱发，情人眼里出西施。<br>珠沉渊而川媚，玉韫石而山辉。<br>夕阳无限好，只恐不多时。<br>久旱逢甘霖，他乡遇故知；洞房花烛夜，金榜题名时。<br>惜花春起早，爱月夜眠迟。<br>掬水月在手，弄花香满衣。<br>桃红李白蔷薇紫，问着东君总不知。<br>教子教孙须教义，栽桑栽柘少栽花。<br>休念故乡生处好，受恩深处便为家。<br>学在一人之下，用在万人之上。<br>一日为师，终生为父。<br>忘恩负义，禽兽之徒。<br>劝君莫将油炒菜，留与儿孙夜读书。<br>书中自有千钟粟，书中自有颜如玉。<br>莫怨天来莫怨人，五行八字命生成。<br>莫怨自己穷，穷要穷得干净；莫羡他人富，富要富得清高。<br>别人骑马我骑驴，仔细思量我不如，<br>待我回头看，还有挑脚汉。<br>路上有饥人，家中有剩饭。<br>积德与儿孙，要广行方便。<br>作善鬼神钦，作恶遭天遣。<br>积钱积谷不如积德，买田买地不如买书。<br>一日春工十日粮，十日春工半年粮。<br>疏懒人没吃，勤俭粮满仓。<br>人亲财不亲，财利要分清。<br>十分伶俐使七分，常留三分与儿孙，<br>若要十分都使尽，远在儿孙近在身。<br>君子乐得做君子，小人枉自做小人。<br>好学者则庶民之子为公卿，不好学者则公卿之子为庶民。<br>惜钱莫教子，护短莫从师。<br>记得旧文章，便是新举子。<br>人在家中坐，祸从天上落。<br>但求心无愧，不怕有后灾。<br>只有和气去迎人，哪有相打得太平。<br>忠厚自有忠厚报，豪强一定受官刑。<br>人到公门正好修，留些阴德在后头。<br>为人何必争高下，一旦无命万事休。<br>山高不算高，人心比天高。<br>白水变酒卖，还嫌猪无糟。<br>贫寒休要怨，宝贵不须骄。<br>善恶随人作，祸福自己招。<br>奉劝君子，各宜守己。<br>只此呈示，万无一失。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://BreakMind.github.io/2017/02/25/增光贤文-上/" data-id="cizqzznv2000hgw6qxq3xfkby" class="article-share-link">分享</a>
+      <a data-url="http://BreakMind.github.io/2017/02/28/GCD/" data-id="cizsoq1eo0003ke6qjzodc9s7" class="article-share-link">分享</a>
       
       
     </footer>
@@ -535,7 +615,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
     </div>
   </div>
 
@@ -563,23 +643,23 @@
       <ul>
         
           <li>
-            <a href="/2017/03/01/Cocoapod安装与简单使用/">Cocoapod安装与简单使用</a>
+            <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/MAC下使用CLOC进行代码量统计/">MAC下使用CLOC进行代码量统计</a>
+            <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/Homebrew/">Homebrew</a>
+            <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/Block/">Block</a>
+            <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
           </li>
         
           <li>
-            <a href="/2017/02/28/GCD/">GCD</a>
+            <a href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
           </li>
         
       </ul>
@@ -593,6 +673,7 @@
     <div class="widget">
     <ul>
       <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://blog.sunnyxx.com/" target="_blank">sunnyxx</a></li>
       <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
       <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
       <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>

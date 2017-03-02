@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第2条：在类的头文件中尽量少引入其他都文件 | Talk is cheap, show me the code.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="与C和C++一样，Objective-C也使用“头文件”（header file）与“实现文件”（implementation file）来区隔代码。用Objective-C语言编写“类”（class）的标准方式为：以类名做文件名，分别创建两个文件，头文件后缀用.h，实现文件后缀用.m。创建好一个类之后，其代码看上去如下所示：123456789101112131415// EOCPerson.h#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第2条：在类的头文件中尽量少引入其他都文件">
+<meta property="og:url" content="http://BreakMind.github.io/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/index.html">
+<meta property="og:site_name" content="Talk is cheap, show me the code.">
+<meta property="og:description" content="与C和C++一样，Objective-C也使用“头文件”（header file）与“实现文件”（implementation file）来区隔代码。用Objective-C语言编写“类”（class）的标准方式为：以类名做文件名，分别创建两个文件，头文件后缀用.h，实现文件后缀用.m。创建好一个类之后，其代码看上去如下所示：123456789101112131415// EOCPerson.h#">
+<meta property="og:updated_time" content="2017-03-02T15:39:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第2条：在类的头文件中尽量少引入其他都文件">
+<meta name="twitter:description" content="与C和C++一样，Objective-C也使用“头文件”（header file）与“实现文件”（implementation file）来区隔代码。用Objective-C语言编写“类”（class）的标准方式为：以类名做文件名，分别创建两个文件，头文件后缀用.h，实现文件后缀用.m。创建好一个类之后，其代码看上去如下所示：123456789101112131415// EOCPerson.h#">
+  
+    <link rel="alternate" href="/atom.xml" title="Talk is cheap, show me the code." type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Talk is cheap, show me the code.</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/">个人简介</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://BreakMind.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第2条：在类的头文件中尽量少引入其他都文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/" class="article-date">
+  <time datetime="2017-03-01T17:00:12.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      第2条：在类的头文件中尽量少引入其他都文件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>与C和C++一样，Objective-C也使用“头文件”（header file）与“实现文件”（implementation file）来区隔代码。用Objective-C语言编写“类”（class）的标准方式为：以类名做文件名，分别创建两个文件，头文件后缀用.h，实现文件后缀用.m。创建好一个类之后，其代码看上去如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString * firstName;</div><div class="line">@property (nonatomic, copy) NSString * lastName;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCPerson.m</div><div class="line">#import &quot;EOCPerson.h&quot;</div><div class="line"></div><div class="line">@implementation EOCPerson</div><div class="line">// Implementation of methods</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>用Objective-C语言编写任何类几乎都需要引入Foundation.h。如果不在该类本身引入这个文件的话，那么就要引入与其超类所属框架相对应的“基本头文件”（base header file）。例如，在创建IOS应用程序时，通常会继承UIViewController类。而这些子类的头文件需要引入UIKit.h。</p>
+<p>现在看来，EOCPerson类还好。其头文件引入了整个Foundation框架，不过这并没有问题。如果此类继承自Foundation框架中的某个类，那么EOCPerson类的使用者（consumer）可能会用到其基类中的许多内容。继承自UIViewController的那些类也是如此，其使用者可能会用到UIKit中的大部分内容。</p>
+<p>过段时间，你可能又创建了一个名为EOCEmployer的新类，然后可能觉得每个EOCPerson实例都应该有一个EOCEmployer。于是，直接为其添加一项属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString *firstName;</div><div class="line">@property (nonatomic, copy) NSString *lastName;</div><div class="line">@property (nonatomic, strong) EOCEmployer *employer;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>然而这么做有个问题，就是在编译引入了EOCPerson.h的文件时，EOCEmployer类并不可见。不便强迫开发者在引入EOCPerson.h时必须一并引入EOCEmployer.h，所以，常见办法是在EOCPerson.h中加入下面这行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &quot;EOCEmployer.h&quot;</div></pre></td></tr></table></figure></p>
+<p>这种办法可行，但是不够优雅。在编译一个使用了EOCPerson类的文件时，不需要知道EOCEmployer类的全部细节，只需要知道有一个类名叫EOCEmployer就好，所幸有个办法能把这一情况告诉编译器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@class EOCEmployer;</div></pre></td></tr></table></figure></p>
+<p>这叫做“向前声明”（forward declaring）该类。现在EOCPerson的头文件变成了这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@class EOCEmployer;</div><div class="line"></div><div class="line">@interface EOCPerson : NSObject</div><div class="line">@property (nonatomic, copy) NSString *firstName;</div><div class="line">@property (nonatomic, copy) NSString *lastName;</div><div class="line">@property (nonatomic, strong) EOCEmployer *employer;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>EOCPerson类的实现文件则需要引入EOCEmployer类的头文件，因为若要使用后者，则必须知道其所有接口细节。于是，实现文件就是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// EOCPerson.m</div><div class="line">#import &quot;EOCPerson.h&quot;</div><div class="line">#import &quot;EOCEmployer.h&quot;</div><div class="line"></div><div class="line">@implementation EOCPerson</div><div class="line">// Implementation of methods</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>将引入头文件的时机尽量延后，只在确有需要时才引入，这样就可以减少类的使用者所需引入的头文件数量。假设本例把EOCEmployer.h引入到EOCPerson.h，那么只要引入EOCPerson.h，就会一并引入EOCEmployer.h的所有内容。此过程若持续下去，则要引入许多根本用不到的内容，这当然会增加编译事件。</p>
+<p>向前声明也解决了两个类互相引用的问题。假设要为EOCEmployer类加入新增及删除雇员的方法，那么其头文件中会加入下述定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-(void)addEmployee:(EOCPerson *)person;</div><div class="line">-(void)removeEmployee:(EOCPerson *)person;</div></pre></td></tr></table></figure></p>
+<p>此时，若要编译EOCEmployer，则编译器必须知道EOCPerson这个类，而要编译EOCPerson，则又必须知道Employer。如果在各自头文件中引入对方的头文件，则会导致“循环引用”（chicken-and-egg situation）。当解析其中的一个头文件时，编译器会发现它引入了另一个头文件，而那个头文件又回过头来引用第一个头文件。使用#import而非#include指令虽然不会导致死循环，但却意味着这两个类里有一个无法被正确编译。如果不信的话，读者可以自己试试。</p>
+<p>但是有时候必须要在头文件中引入其他头文件。如果你写的类继承自某个超类，则必须引入定义那个超类的头文件。同理，如果要声明你写的类遵从某个协议（protocol），那么该协议必须有完整定义，切不能使用向前声明。向前声明只能告诉编译器有某个协议，而此时编译器却要知道该协议中定义的方法。<br>例如，要从图形类中继承一个矩形类，切令其遵循绘制协议：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &quot;EOCShape.h&quot;</div><div class="line">#import &quot;EOCDrawable.h&quot;</div><div class="line"></div><div class="line">@interface EOCRectangle : EOCShape&lt;EOCDrawable&gt;</div><div class="line">@property (nonatomic, assign) float width;</div><div class="line">@property (nonatomic, assign) float height;</div></pre></td></tr></table></figure></p>
+<p>第二条#import是难免的。鉴于此，最好是把协议单独放在一个头文件中。要是把EOCDrawable协议放在了某个大的头文件里，那么只要引入此协议，就必定会引入那个头文件中的全部内容，如此一来，就像上面说的那样，会产生相互依赖问题，而且还会增加编译时间。</p>
+<p>然而有些协议，例如“委托协议”（delegate protocol，参见第23条），就不用单独写一个头文件了。在那种情况下，协议只有与接收协议委托的类放在一起定义才有意义。此时最好能在实现文件中声明此类实现了该委托协议，并把这段实现代码放在“class-continuation分类”（class-continuation category，参见第27条）里。这样的话，只要在实现文件中引入包括委托协议的头文件即可，而不需将其放在公共头文件（public header file）里。</p>
+<p>每次在头文件中引入其他头文件之前，都要先问问自己这样做是否确有必要。如果可以用向前声明取代引入，那么就不要引入。若因为要实现属性、实例变量或者要遵循协议而必须引入头文件，则应尽量将其移至“class-continuation分类”中（参见第27条）。这样做不仅可以缩减编译事件，而且还能降低彼此依赖程度。若是依赖关系过于复杂，则会给维护带来麻烦，而且，如果只想把代码的某个部分开放为公共API的话，太复杂的以来关系也会出问题。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）。<br>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，尽量把“该类遵循某协议”的这条声明移到“class-continuation”分类中。如果不行的话，就把协议单独放在一个头文件中，然后将其引入。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/" data-id="cizsoq1gk000rke6qla9j5kog" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">新的</strong>
+      <div class="article-nav-title">
+        
+          第3条：多用字面量语法，少用与之等价的方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/02/第1条：熟悉Objective-C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">旧的</strong>
+      <div class="article-nav-title">第1条-熟悉Objective-C</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-第2条：在类的头文件中尽量少引入其他都文件" data-title="第2条：在类的头文件中尽量少引入其他都文件" data-url="http://BreakMind.github.io/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'breakmind'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">相关博客</h3>
+    <div class="widget">
+    <ul>
+      <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://blog.sunnyxx.com/" target="_blank">sunnyxx</a></li>
+      <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
+      <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
+      <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>
+      <li><a href="http://www.shellsec.com/news/8114.html" target="_blank">BAT 面试指南</a></li>
+      <li><a href="http://blog.csdn.net/yiyaaixuexi/" target="_blank">念茜</a></li>
+      <li><a href="http://blog.txx.im/" target="_blank">TXX</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 BreakMind<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/" class="mobile-nav-link">个人简介</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

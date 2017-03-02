@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第4条：多用类型常量，少用#define预处理指令 | Talk is cheap, show me the code.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="编写代码时经常要定义常量。例如，要写一个UI视图类，此视图显示出来之后就播放动画，然后消失。你可能想把播放动画的事件提取为常量。掌握了Objective-C与其C语言基础的人，也许会用这种方法来做：1#define ANIMATION_DURATION 0.3
+上述预处理指令会把源代码中的ANIMATION_DURATION字符串替换为0.3。这可能就是你想要的效果，不过这样定义出来的常量没有类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第4条：多用类型常量，少用#define预处理指令">
+<meta property="og:url" content="http://BreakMind.github.io/2017/03/02/第4条：多用类型常量，少用-define预处理指令/index.html">
+<meta property="og:site_name" content="Talk is cheap, show me the code.">
+<meta property="og:description" content="编写代码时经常要定义常量。例如，要写一个UI视图类，此视图显示出来之后就播放动画，然后消失。你可能想把播放动画的事件提取为常量。掌握了Objective-C与其C语言基础的人，也许会用这种方法来做：1#define ANIMATION_DURATION 0.3
+上述预处理指令会把源代码中的ANIMATION_DURATION字符串替换为0.3。这可能就是你想要的效果，不过这样定义出来的常量没有类型">
+<meta property="og:updated_time" content="2017-03-02T15:40:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第4条：多用类型常量，少用#define预处理指令">
+<meta name="twitter:description" content="编写代码时经常要定义常量。例如，要写一个UI视图类，此视图显示出来之后就播放动画，然后消失。你可能想把播放动画的事件提取为常量。掌握了Objective-C与其C语言基础的人，也许会用这种方法来做：1#define ANIMATION_DURATION 0.3
+上述预处理指令会把源代码中的ANIMATION_DURATION字符串替换为0.3。这可能就是你想要的效果，不过这样定义出来的常量没有类型">
+  
+    <link rel="alternate" href="/atom.xml" title="Talk is cheap, show me the code." type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Talk is cheap, show me the code.</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/">个人简介</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://BreakMind.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第4条：多用类型常量，少用-define预处理指令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/" class="article-date">
+  <time datetime="2017-03-02T08:44:02.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      第4条：多用类型常量，少用#define预处理指令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编写代码时经常要定义常量。例如，要写一个UI视图类，此视图显示出来之后就播放动画，然后消失。你可能想把播放动画的事件提取为常量。掌握了Objective-C与其C语言基础的人，也许会用这种方法来做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#define ANIMATION_DURATION 0.3</div></pre></td></tr></table></figure></p>
+<p>上述预处理指令会把源代码中的ANIMATION_DURATION字符串替换为0.3。这可能就是你想要的效果，不过这样定义出来的常量没有类型信息。“持续”（duration）这个词看上去应该与实践有关，但是代码中又未明确指出。因此，预处理过程会把碰到的所有ANIMATION_DURATION一律替换成0.3，这样的话。假设此指令声明在某个头文件中，那么所有引入了这个头文件的代码，其ANIMATION_DURATION都会被替换。</p>
+<p>要想解决此问题，应该设法利用编译器的某些特性才对。有个办法比用预处理器指令来定义常量更好。比方说，下面这行代码就定义了一个类型为NSTimeInterval的常量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static const NSTimeInterval kAnimationDuration = 0.3;</div></pre></td></tr></table></figure></p>
+<p>请注意，用此方法定义的常量包含类型信息，其好处是清楚地描述了常量的含义。由此可知该常量类型为NSTimerInterval，这有助于为其编写开发文档。如果要定义许多常量，那么这种方式能令稍后阅读代码的人更易理解其意图。</p>
+<p>还有注意常量名称。常用的命名法是：若常量局限于某“编译单元”（translation unit，也就是“实现文件”， implementation file）之内，则在前面加上字母k；若常量在类之外可见，则通常以类名为前缀。第19条详解了命名习惯（naming convention）。</p>
+<p>定义常量的位置很重要，我们总喜欢在头文件里声明预处理指令，这样做真的很糟糕，当常量名称有可能互相出图更是如此。例如，ANIMATION_DURATION这个常量名就不该在头文件中，因为所有引入了这份头文件的其他文件都会出现这个名字。其实就连用static const定义的那个常量也不应出现在头文件里。因为Objective-C没有“命名空间”（namespace）这一概念，所以那样做等于声明了一个名叫kAnimationDuration的全局变量。此名称应该加上前缀，以表明其所属的类，例如可改为EOCViewClassAnimationDuration。本书第19条中深入讲解了一套清晰的命名方案。</p>
+<p>若不打算公开某个常量，则应将其定义在使用该常量的实现文件里。比方说，要开发一个使用UIKit框架的IOS应用程序，其UIView子类中含有表示动画播放时间的常量，那么可以这样写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">// EOCAnimatedView.h</div><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@interface EOCAnimatedView : UIView</div><div class="line">- (void)animate;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCAnimatedView.m</div><div class="line">#import &quot;EOCAnimatedView.h&quot;</div><div class="line"></div><div class="line">static const NSTimeInterval kAnimationDuration = 0.3;</div><div class="line"></div><div class="line">@inplementation EOCAnimatedView</div><div class="line">- (void)animate&#123;</div><div class="line">	[UIViewanimateWithDuration:kAnimationDuration animation:^()&#123;</div><div class="line">		// Perform animations</div><div class="line">	&#125;];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>变量一定要同时用static与const来声明。如果试图修改由const修饰符所声明的变量，那么编译器就会报错。在本例中，我们正是希望这样：因为动画播放时为定值，所以不应修改。而static修饰符则意味着该变量仅在定义此变量的编译单元中可见。编译器每到一个编译单元，就会输出一份“目标文件”（object file）。在Objective-C的语境下，“编译单元一词通常指每个类的实现文件（以.m为后缀名）”。因此，在上述范例代码中声明的kAnimationDuratin变量，其作用域仅限于EOCAnimatedView.m所生成的目标文件中。假如声明此变量时不加static，则编译器会为它创建一个“外部符号”（external symbol）。此时若是另外一个编译单元也声明了同名变量，那么编译器就抛出一条错误消息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">duplicate symbol _kAnimationDuration in:</div><div class="line">	EOCAnimatedView.o</div><div class="line">	EOCOtherView.o</div></pre></td></tr></table></figure></p>
+<p>实际上，如果一个变量既声明为static，又声明为const，那么编译器根本不会创建符号，而是会像#define预处理指令一样，把所有遇到的变量都替换为常值。不过还是要记住：用这种方式定义的常量带有类型信息。</p>
+<p>有时候需要对外公开某个常量。比方说，你可能要在类代码中调用NSNotificationCenter以通知他人。用一个对象来派发通知，令其他欲接收通知的对象向该对象注册，这样就能实现此功能了。派发通知时，需要使用字符串来表示此项通知的名称，而这个名字就可以声明为一个外界可见的常值变量（const variable）。这样的话，注册者无须知道实际字符串值，只需以常值变量来注册自己想要接收的通知即可。</p>
+<p>此类常量需放在“全局符号表”（global symbol table）中，以便可以在定义该常量的编译单元之外使用。因此，其定义方式与上例演示的static const有所不同。应该这样来定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// In the header file</div><div class="line">extern NSString *const EOCStringConstant;</div><div class="line"></div><div class="line">// In the implementation file</div><div class="line">NSString *const EOCStringConstant = @&quot;Value&quot;;</div></pre></td></tr></table></figure></p>
+<p>这个常量在头文件中“声明”，且在实现文件中“定义”。注意const修饰符在常量类型中的位置。常量定义应从右至左解读，所以在本例中，EOCStringConstant就是“一个常量，而这个常量是指针，指向NSString对象”。这与需求相符：我们不希望有人改变此指针常量，使得其指向另一个NSString对象。</p>
+<p>编译器看到头文件中的extern关键字，就能明白如何在引入此头文件的代码中处理该常量了。这个关键字是告诉编译器，在全局符号表中将会有一个名叫EOCStringConstant的符号。也就是说，编译器无需查看其定义，即允许代码使用此向量。因为它知道，当链接成二进制文件之后，肯定能找到这个常量。</p>
+<p>此类常量必须要定义，而且只能定义一次。通常将其定义在与声明该常量的头文件相关的实现文件里。由实现文件生成目标文件时，编译器会在“数据段”（data section）为字符串分配存储空间。链接器会把此目标文件与其他目标文件相链接，以生成最终的二进制文件。凡是用到EOCStringConstant这个全局符号的地方，链接器都能将其解析。</p>
+<p>因为符号要放在全局符号表里，所以命名常量时需谨慎。例如，在某应用程序中有个处理登录操作的类，在登录完成后会发出通知。派发通知所用的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// EOCLoginManager.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">extern NSString *const EOCLoginManagerDidLoginNotification;</div><div class="line"></div><div class="line">@interface EOCLoginManager : NSObject</div><div class="line">- (void)login;</div><div class="line">@end</div><div class="line"></div><div class="line">// EOCLoginManager.m</div><div class="line">#import &quot;EOCLoginManager.h&quot;</div><div class="line"></div><div class="line">NSString *const EOCLoginManagerDidLoginNotification = @&quot;EOCLoginManagerDidLoginNotification&quot;;</div><div class="line"></div><div class="line">@implementation EOCLoginManager;</div><div class="line"> - (void)login&#123;</div><div class="line">	// Perform login asynchronously, then call &apos;p_didLogin&apos;.</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)p_didLogin&#123;</div><div class="line">	[[NSNotificationCenter defaultCenter] postNotificationName:EOCLoginManagerDidLoginNotification object:nil];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>注意常量的名字。为避免名称冲突，最好是用与之相关的类名做前缀。系统框架中一般都这样做。例如UIKit就按照这种方式来声明用作通知名称的全局常量。其中有类似UIApplicationDidEnterBackgroundNotification与UIApplicationWillEnterForegroundNotification这样的常量名。<br>其他类型的常量也是如此。假如要把前列中EOCAnimationView类里的动画播放时长对外公布，那么可以这样声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// EOCAnimatedView.h</div><div class="line">extern const NSTimeInterval EOCAnimatedViewAnimationDuration;</div><div class="line"></div><div class="line">// EOCAnimatedView.m</div><div class="line">const NSTimeInterval EOCAnimatedViewAnimationDuration = 0.3;</div></pre></td></tr></table></figure></p>
+<p>这样定义常量要优于使用#define预处理指令，因为编译器会确保常量值不变。一旦在EOCAnimatedView.m中定义好，即可随处使用。而采用预处理指令所定义的常量可能会无意中遭人修改，从而导致应用程序各个部分所使用的值互不相同。</p>
+<p>总之，勿使用预处理指令定义常量，而应该借助编译器来确保常量正确，比方说可以在实现文件中用static const来声明常量，也可以声明一些全局常量。</p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>不要用预处理指令定义常量。这样定义出来的常量不含类型信息，编译器只是会在编译前据此执行查找和替换操作。即使有人重新定义了常量值，编译器也不会产生警告信息，这将导致应用程序中的常量值不一致。<br>在实现文件中使用static const来定义“只在编译单元内可见的常量”（translation-unit-specific constant）。由于此类常量不在全局符号表中，所以无须为其名称加前缀。<br>在头文件中使用extern来声明全局常量，并在相关实现文件中定义其值。这种常量要出现在全局符号表中，所以其名称应加以区隔，通常用与之相关的类名做前缀。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://BreakMind.github.io/2017/03/02/第4条：多用类型常量，少用-define预处理指令/" data-id="cizsoq1gn000tke6q9dpcinx8" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">新的</strong>
+      <div class="article-nav-title">
+        
+          第5条：用枚举表示状态、选项、状态码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">旧的</strong>
+      <div class="article-nav-title">第3条：多用字面量语法，少用与之等价的方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-第4条：多用类型常量，少用-define预处理指令" data-title="第4条：多用类型常量，少用#define预处理指令" data-url="http://BreakMind.github.io/2017/03/02/第4条：多用类型常量，少用-define预处理指令/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'breakmind'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS-编写高质量代码/">IOS-编写高质量代码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MAC/">MAC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/吐槽/">吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/鉴古/">鉴古</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/02/第5条：用枚举表示状态、选项、状态码/">第5条：用枚举表示状态、选项、状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第4条：多用类型常量，少用-define预处理指令/">第4条：多用类型常量，少用#define预处理指令</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第3条：多用字面量语法，少用与之等价的方法/">第3条：多用字面量语法，少用与之等价的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第2条：在类的头文件中尽量少引入其他都文件/">第2条：在类的头文件中尽量少引入其他都文件</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/第1条：熟悉Objective-C/">第1条-熟悉Objective-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">相关博客</h3>
+    <div class="widget">
+    <ul>
+      <li><a href="http://ibireme.com" target="_blank">ibireme</a></li>
+      <li><a href="http://blog.sunnyxx.com/" target="_blank">sunnyxx</a></li>
+      <li><a href="http://github.ibireme.com/github/list/ios/" target="_blank">Github-iOS备忘</a></li>
+      <li><a href="http://lysongzi.com/" target="_blank">lysongzZ_</a></li>
+      <li><a href="http://blog.csdn.net/chenyufeng1991" target="_blank">乞力马扎罗的雪</a></li>
+      <li><a href="http://www.shellsec.com/news/8114.html" target="_blank">BAT 面试指南</a></li>
+      <li><a href="http://blog.csdn.net/yiyaaixuexi/" target="_blank">念茜</a></li>
+      <li><a href="http://blog.txx.im/" target="_blank">TXX</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 BreakMind<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/" class="mobile-nav-link">个人简介</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
